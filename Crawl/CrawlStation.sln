@@ -1,0 +1,23 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.1.32421.90
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "CrawlStation", "CrawlStation\CrawlStation.pyproj", "{5AD1E368-654C-4983-9122-0A6716E9C5E4}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{5AD1E368-654C-4983-9122-0A6716E9C5E4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5AD1E368-654C-4983-9122-0A6716E9C5E4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {953D359D-E422-4CA2-A52D-0331C3301CD1}
+	EndGlobalSection
+EndGlobal

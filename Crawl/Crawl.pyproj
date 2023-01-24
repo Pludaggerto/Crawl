@@ -1,0 +1,112 @@
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>4618b47a-9398-4e03-b5f1-3714791d0394</ProjectGuid>
+    <ProjectHome>.</ProjectHome>
+    <StartupFile>Code\crawl_now.py</StartupFile>
+    <SearchPath>Baser</SearchPath>
+    <WorkingDirectory>.</WorkingDirectory>
+    <OutputPath>.</OutputPath>
+    <Name>Crawl</Name>
+    <RootNamespace>Crawl</RootNamespace>
+    <TestFramework>Pytest</TestFramework>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <DebugSymbols>true</DebugSymbols>
+    <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <DebugSymbols>true</DebugSymbols>
+    <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="Baser\Baser.py" />
+    <Compile Include="Code\crawl_now.py" />
+    <Compile Include="Code\Crawl_past.py" />
+    <Compile Include="Code\Crawl_zj.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Code\Post.py" />
+    <Compile Include="Code\Writebat.py" />
+    <Compile Include="Code\Crawl_hh.py" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="File\" />
+    <Folder Include="File\Auxiliary\" />
+    <Folder Include="File\data\" />
+    <Folder Include="Code\" />
+    <Folder Include="Baser\" />
+    <Folder Include="test\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="File\Auxiliary\Export_Output.cpg" />
+    <Content Include="File\Auxiliary\Export_Output.dbf" />
+    <Content Include="File\Auxiliary\Export_Output.prj" />
+    <Content Include="File\Auxiliary\Export_Output.sbn" />
+    <Content Include="File\Auxiliary\Export_Output.sbx" />
+    <Content Include="File\Auxiliary\Export_Output.shp" />
+    <Content Include="File\Auxiliary\Export_Output.shx" />
+    <Content Include="File\Auxiliary\huanghe.cpg" />
+    <Content Include="File\Auxiliary\huanghe.dbf" />
+    <Content Include="File\Auxiliary\huanghe.jpg" />
+    <Content Include="File\Auxiliary\huanghe.prj" />
+    <Content Include="File\Auxiliary\huanghe.rar" />
+    <Content Include="File\Auxiliary\huanghe.sbn" />
+    <Content Include="File\Auxiliary\huanghe.sbx" />
+    <Content Include="File\Auxiliary\huanghe.shp" />
+    <Content Include="File\Auxiliary\huanghe.shx" />
+    <Content Include="File\Auxiliary\huanghe2.cpg" />
+    <Content Include="File\Auxiliary\huanghe2.dbf" />
+    <Content Include="File\Auxiliary\huanghe2.prj" />
+    <Content Include="File\Auxiliary\huanghe2.sbn" />
+    <Content Include="File\Auxiliary\huanghe2.sbx" />
+    <Content Include="File\Auxiliary\huanghe2.shp" />
+    <Content Include="File\Auxiliary\huanghe2.shx" />
+    <Content Include="File\Auxiliary\Station.cpg" />
+    <Content Include="File\Auxiliary\Station.dbf" />
+    <Content Include="File\Auxiliary\Station.sbn" />
+    <Content Include="File\Auxiliary\Station.sbx" />
+    <Content Include="File\Auxiliary\Station.shp" />
+    <Content Include="File\Auxiliary\Station.shx" />
+    <Content Include="File\Auxiliary\Station.txt" />
+    <Content Include="File\Auxiliary\SWOT综述.pptx" />
+    <Content Include="File\Auxiliary\全国河流水文站坐标.xls" />
+    <Content Include="File\Auxiliary\黄河水文站数据.pptx" />
+    <Content Include="File\data\2000.txt" />
+    <Content Include="File\data\2001.txt" />
+    <Content Include="File\data\2002.txt" />
+    <Content Include="File\data\2003.txt" />
+    <Content Include="File\data\2004.txt" />
+    <Content Include="File\data\2005.txt" />
+    <Content Include="File\data\2006.txt" />
+    <Content Include="File\data\2007.txt" />
+    <Content Include="File\data\2008.txt" />
+    <Content Include="File\data\2009.txt" />
+    <Content Include="File\data\2010.txt" />
+    <Content Include="File\data\2011.txt" />
+    <Content Include="File\data\2012.txt" />
+    <Content Include="File\data\2013.txt" />
+    <Content Include="File\data\2014.txt" />
+    <Content Include="File\data\2015.txt" />
+    <Content Include="File\data\2016.txt" />
+    <Content Include="File\data\2017.txt" />
+    <Content Include="File\data\2018.txt" />
+    <Content Include="File\data\2019.txt" />
+    <Content Include="File\data\2020.txt" />
+    <Content Include="File\data\2021.txt" />
+    <Content Include="File\data\2022.txt" />
+    <Content Include="File\data\merge.txt" />
+    <Content Include="note.md" />
+    <Content Include="station.md" />
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
+  <!-- Uncomment the CoreCompile target to enable the Build command in
+       Visual Studio and specify your pre- and post-build commands in
+       the BeforeBuild and AfterBuild targets below. -->
+  <!--<Target Name="CoreCompile" />-->
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+</Project>

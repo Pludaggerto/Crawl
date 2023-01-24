@@ -1,0 +1,25 @@
+conda activate geos
+python C:\Users\hp\Desktop\huanghe\Crawl.py 2020
+python C:\Users\hp\Desktop\huanghe\Crawl.py 2019
+python C:\Users\hp\Desktop\huanghe\Crawl.py 2018
+python C:\Users\hp\Desktop\huanghe\Crawl.py 2017
+python C:\Users\hp\Desktop\huanghe\Crawl.py 2016
+python C:\Users\hp\Desktop\huanghe\Crawl.py 2015
+python C:\Users\hp\Desktop\huanghe\Crawl.py 2014
+python C:\Users\hp\Desktop\huanghe\Crawl.py 2013
+python C:\Users\hp\Desktop\huanghe\Crawl.py 2012
+python C:\Users\hp\Desktop\huanghe\Crawl.py 2011
+python C:\Users\hp\Desktop\huanghe\Crawl.py 2010
+python C:\Users\hp\Desktop\huanghe\Crawl.py 2009
+python C:\Users\hp\Desktop\huanghe\Crawl.py 2008
+python C:\Users\hp\Desktop\huanghe\Crawl.py 2007
+python C:\Users\hp\Desktop\huanghe\Crawl.py 2006
+python C:\Users\hp\Desktop\huanghe\Crawl.py 2005
+python C:\Users\hp\Desktop\huanghe\Crawl.py 2004
+python C:\Users\hp\Desktop\huanghe\Crawl.py 2003
+python C:\Users\hp\Desktop\huanghe\Crawl.py 2002
+python C:\Users\hp\Desktop\huanghe\Crawl.py 2001
+python C:\Users\hp\Desktop\huanghe\Crawl.py 2000
+python C:\Users\hp\Desktop\huanghe\Crawl.py 1999
+python C:\Users\hp\Desktop\huanghe\Crawl.py 1998
+
