@@ -256,7 +256,7 @@ def main():
     log.addHandler(handler)
     log.setLevel(logging.INFO)
 
-    workspace = r"C:\Users\lwx\source\repos\Crawl\Crawl\test"
+    workspace = r"D:\Water_station"
 
     nowCrawler = NowCrawler(workspace)
     nowCrawler.run_all()

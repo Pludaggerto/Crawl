@@ -6,3 +6,6 @@ http://www.pearlwater.gov.cn/sssq/
 http://61.163.88.227:8006/hwsq.aspx?sr=0nkRxv6s9CTRMlwRgmfFF6jTpJPtAv87
 # 长江流域重要站实时水情表(cjll)
 http://www.cjh.com.cn/sssqcwww.html
+# 湖北省内主要流域河道站实时水情
+http://113.57.190.228:8001/web/Report/BasicSQReport
+

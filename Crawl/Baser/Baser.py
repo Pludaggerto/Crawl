@@ -31,9 +31,11 @@ class Baser(object):
             if(year < datetime.datetime.now().year):
                 begin.append(str(year) + "-01-01")
                 end.append(str(year) + "-12-31")
-            elif(year >= datetime.datetime.now().year):
-                begin.append(str(2022) + "-01-01")
+            elif(year >= datetime.datetime.now().year):    
+                datestart = datetime.datetime.now()
+                begin.append(str(datestart.strftime('%Y')) + "-01-01")
                 end.append(datetime.datetime.now().strftime('%Y-%m-%d'))
+                break
         begin.reverse()
         end.reverse()
         return begin, end

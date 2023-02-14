@@ -4,13 +4,14 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>4618b47a-9398-4e03-b5f1-3714791d0394</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>Code\crawl_now.py</StartupFile>
+    <StartupFile>Code\Crawl_past.py</StartupFile>
     <SearchPath>Baser</SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
     <OutputPath>.</OutputPath>
     <Name>Crawl</Name>
     <RootNamespace>Crawl</RootNamespace>
     <TestFramework>Pytest</TestFramework>
+    <InterpreterId>Global|VisualStudio|geos</InterpreterId>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <DebugSymbols>true</DebugSymbols>
@@ -27,7 +28,8 @@
     <Compile Include="Code\Crawl_zj.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Code\Post.py" />
+    <Compile Include="Code\Post_cjhb.py" />
+    <Compile Include="Code\Post_hh.py" />
     <Compile Include="Code\Writebat.py" />
     <Compile Include="Code\Crawl_hh.py" />
   </ItemGroup>
@@ -99,6 +101,9 @@
     <Content Include="File\data\merge.txt" />
     <Content Include="note.md" />
     <Content Include="station.md" />
+  </ItemGroup>
+  <ItemGroup>
+    <InterpreterReference Include="Global|VisualStudio|geos" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
   <!-- Uncomment the CoreCompile target to enable the Build command in

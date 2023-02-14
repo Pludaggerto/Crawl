@@ -1,4 +1,4 @@
-import logging
+﻿import logging
 import requests
 from bs4 import BeautifulSoup
 from selenium import webdriver
@@ -18,6 +18,8 @@ from Baser import Baser
 import json
 import pandas as pd
 from tqdm import trange
+from pypinyin import lazy_pinyin
+import glob
 
 class PasthhCrawler(Baser):
 
@@ -88,9 +90,22 @@ class PastcjhbCrawler(Baser):
         suffix = "GetRiverData?date=" + str(date) + "+08%3A00"
         return self.url + suffix
 
-    def get_data(self, beginDate, endDate):
+    def get_data(self, beginDate, endDate, en = False):
+
+        fileName_cjhb  = os.path.join(self.workspace, "cjhb.txt")
+        if not os.path.exists(fileName_cjhb):
+            f = open(fileName_cjhb, 'w+', newline="", encoding='utf-8')
+            writer = csv.writer(f)
+            if en:
+                writer.writerow(["Date", "ID", "River", "Station", "WaterLevel(m)", "Discharge(m3/s)"])                   
+            else:
+                writer.writerow(["日期", "站点编号", "河名", "站名","水位", "水势", "流量", "比昨日涨落"
+                                "设防水位", "警戒水位", "保证水位", "MAXZ"])                   
+            f.close()
+
         begin, end = self.num_to_year(beginDate, endDate)
         for j in range(len(begin)):
+            logging.info("[INFO]crawling " + begin[j] + " "+ end[j] +  " ...")
             date = self.create_assist_date(begin[j], end[j])
             for i in trange(len(date)):
                 time.sleep(0.5)    
@@ -114,38 +129,80 @@ class PastcjhbCrawler(Baser):
                 [row1_all.append(i) for i in row2_all]
                 row_all = row1_all
                 df = pd.DataFrame(row_all)
-                self.resultFile = r"C:\Users\lwx\source\repos\Crawl\Crawl\test\test.txt"
-                df.to_csv(self.resultFile, index = False,
-                         header = False, mode = "a+")
+                df = df[[0,1,2,3,4,6]]
+                df.to_csv(fileName_cjhb, index = False,
+                            header = False, mode = "a+")
+
+        return fileName_cjhb
+
+    def ch2en(self, string):
+       
+        string_en = "".join(lazy_pinyin(string, style=0))
+
+        return string_en
+
+    def replace_string(self, string):
+        if type(string) == float:
+            return string
+        if type(string) == str:
+            string_dict = {"<br>" : "", "</br>" : "", "入": "in", "出":"out"}
+            for i in string_dict.keys():
+                if i in string:
+                    string = string.replace(i, string_dict[i])
+        return string
+        
 
     def post(self, fileName = None):
-        
-        if fileName == None:
-            fileName = self.resultFile
+        fileName = os.path.join(self.workspace, "cjhb.txt")
+        fileName_cjhb  = os.path.join(self.workspace, "cjhb_post.txt")
+        riverName = ["长江", "湘江", "资水", "沅水", "澧水", "松滋河",
+                     "藕池河", "虎渡河", "汉江", "清江", "沮漳河", "东荆河", 
+                     "汉北河", "大富水", "环水", "府河", "府澴河","富水",
+                     "滠水", "倒水", "举水", "巴水", "蕲水"]
 
-        pass
+        df = pd.read_csv(fileName)
+        df = df[df["River"].isin(riverName)].reset_index(drop=True)
+        df["Station"] = df["Station"].apply(self.ch2en)
+        df["Discharge(m3/s)"] = df["Discharge(m3/s)"].apply(self.replace_string)
+        stationList = df["Station"].unique()
+        for station in stationList:
+            df_part = df[df["Station"] == station][["Date", "WaterLevel(m)", "Discharge(m3/s)"]].sort_values(by=['Date'])
+            df_part.to_csv(os.path.join(self.workspace, "split\\" + station + ".txt"), index = False,  mode = "a+")
+        return 
 
+    def create_month_group(self, string):
+        return "".join(string.split("-")[0:2])
 
-        
+    def validation(self):
 
-
+        File = os.path.join(self.workspace, "split\\yichang.txt")
+        df = pd.read_csv(File)
+        df["Discharge(m3)"] = df["Discharge(m3/s)"] * 3600 * 24
+        df["type"] = df["Date"].apply(self.create_month_group)
+        group = df.groupby("type")["Discharge(m3)"].sum()
+        group.to_csv(os.path.join(self.workspace, "test.txt"))
 
 
 
 def main():
-    workspace = r"C:\Users\lwx\source\repos\Crawl\Crawl\test"
+    
+    log = logging.getLogger()
+    handler = logging.StreamHandler()
+    log.addHandler(handler)
+    log.setLevel(logging.INFO)
+
+    workspace = r"C:\Users\lwx\Desktop\discharge"
     pastcjhbCrawler = PastcjhbCrawler(workspace)
 
     #parser = argparse.ArgumentParser()
     #parser.add_argument('beginDate', help="PixC annotation file", type=int)
     #args = vars(parser.parse_args())
     #beginDate = args["beginDate"]
-    #beginDate = 2009
-    #endDate = 2023
-    #pastcjhbCrawler.get_data(beginDate, endDate)
-
-
-
+    beginDate = 2012
+    endDate = 2013
+    #pastcjhbCrawler.get_data(beginDate, endDate, 1)
+    #pastcjhbCrawler.post()
+    pastcjhbCrawler.validation()
 
 
 if __name__ == '__main__':
