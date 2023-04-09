@@ -65,11 +65,19 @@ class NowCrawler(Baser):
         self.zj_url   = "http://www.pearlwater.gov.cn/sssq/"
         self.cjhb_url = "http://113.57.190.228:8001/Web/Report/"
         self.cjll_url = "http://www.cjh.com.cn/sssqcwww.html"
+        self.qghlsq_url = "http://xxfb.mwr.cn/hydroSearch/greatRiver" # json
         self.nowDate  = datetime.datetime.now().strftime('%Y-%m-%d')
         self.headers={
                         'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36',
                         }
         self.workspace = workspace
+
+    def get_cjhb_url(self, date):
+
+        # crawl everyday 8:00
+        suffix = "GetRiverData?date=" + str(date) + "+08%3A00"
+        return self.cjhb_url + suffix
+
 
     def create_file(self):
         fileName_hh    = os.path.join(self.workspace, self.nowDate.split("-")[0] + "_hh.txt")
@@ -77,6 +85,7 @@ class NowCrawler(Baser):
         fileName_zj_ri = os.path.join(self.workspace, self.nowDate.split("-")[0] + "_zj_ri.txt")
         fileName_cjhb  = os.path.join(self.workspace, self.nowDate.split("-")[0] + "_cjhb.txt")
         fileName_cjll  = os.path.join(self.workspace, self.nowDate.split("-")[0] + "_cjll.txt")
+        fileName_qghlsq = os.path.join(self.workspace, self.nowDate.split("-")[0] + "_qghlsq.txt")
 
         if not os.path.exists(fileName_hh):
             f = open(fileName_hh, 'w+', newline="", encoding='utf-8')
@@ -104,7 +113,13 @@ class NowCrawler(Baser):
             writer = csv.writer(f)
             writer.writerow(["时间", "站名", "具体时间", "水位", "流量", "涨落"])
 
+        if not os.path.exists(fileName_qghlsq):
+            f = open(fileName_qghlsq, 'w+', newline="", encoding='utf-8')
+            writer = csv.writer(f)
+            writer.writerow(["流域", "编号", "行政区", "河名", "站名", "时间", "水位(米)", "流量(米3/秒)", "警戒水位(米)"])
+
     def crawl_hh(self):
+
         logging.info("[INFO]crawling hh...")
         chrome_options = Options()
         chrome_options.add_argument('--headless')
@@ -139,17 +154,15 @@ class NowCrawler(Baser):
         logging.info("[INFO]finish crawling hh...")
     
     def crawl_zj(self):
+
         logging.info("[INFO]crawling zj...")
-
-
-
         chrome_options = Options()
         chrome_options.add_argument('--headless')
         chrome_options.add_argument('--disable-gpu')
         browser = webdriver.Chrome(options=chrome_options)
         browser.get(self.zj_url)
-        html=browser.page_source
-        soup=BeautifulSoup(html,'html.parser')
+        html = browser.page_source
+        soup = BeautifulSoup(html,'html.parser')
         tables = soup.select(".table-wrapper")
         table_reservoir = tables[0]
         table_river = tables[1]
@@ -179,16 +192,11 @@ class NowCrawler(Baser):
         f.close()
         logging.info("[INFO]finish crawling zj...")
 
-    def get_url(self, date):
-        # crawl everyday 8:00
-        suffix = "GetRiverData?date=" + str(date) + "+08%3A00"
-        return self.cjhb_url + suffix
-
     def crawl_cjhb(self):
 
         logging.info("[INFO]crawling cjhb...")
         time.sleep(0.5)    
-        response = requests.get(url = self.get_url(self.nowDate), headers = self.headers)
+        response = requests.get(url = self.get_cjhb_url(self.nowDate), headers = self.headers)
         response.encoding = "utf-8"
         jsons = json.loads(response.text)
         nameList  = ['STCD',   'RVNM',  'STNM',  'Z',  'WPTN',  'Q',  'YZ',  'FRZ',  'WRZ',  'GRZ',  'MAXZ']
@@ -215,6 +223,7 @@ class NowCrawler(Baser):
         logging.info("[INFO]finish crawling cjhb...")
 
     def crawl_cjll(self):
+
         logging.info("[INFO]crawling cjll...")
         time.sleep(0.5)    
         chrome_options = Options()
@@ -222,8 +231,8 @@ class NowCrawler(Baser):
         chrome_options.add_argument('--disable-gpu')
         browser = webdriver.Chrome(options=chrome_options)
         browser.get(self.cjll_url)
-        html=browser.page_source
-        soup=BeautifulSoup(html,'html.parser')
+        html = browser.page_source
+        soup = BeautifulSoup(html,'html.parser')
         fileName = os.path.join(self.workspace, self.nowDate.split("-")[0] + "_cjll.txt")
         f = open(fileName, 'a+', newline="", encoding='utf-8')
         writer = csv.writer(f)
@@ -240,13 +249,56 @@ class NowCrawler(Baser):
         f.close()
         logging.info("[INFO]finish crawling cjll...")
 
+    def crawl_qghlsq(self):
+
+        logging.info("[INFO]crawling qghlsq...")
+        time.sleep(0.5)    
+        response = requests.get(url = self.qghlsq_url, headers = self.headers)
+        response.encoding = "utf-8"
+        jsons = json.loads(response.text)
+        time.sleep(0.5)    
+
+        if jsons["returncode"] != 0:
+             logging.info("[INFO]error in qghlsq crawling...")
+             return 
+
+        else:
+            # ["流域", "编号", "行政区", "河名", "站名", "时间","水位(米)", "流量(米3/秒)", "警戒水位(米)"]
+            # data
+            dataList = list(jsons["result"]["data"])
+            resultRows = []
+            resultRow = []
+            resultRowNames = ['poiBsnm', "stcd", 'poiAddv', 'rvnm', 'stnm', 'tm', "zl", 'ql', 'wrz']
+            for data in dataList:
+
+                for name in resultRowNames:
+                    if name != "tm" and type(data[name]) == str:
+                        resultRow.append(data[name].replace(" ",""))
+                    else:
+                        resultRow.append(data[name])
+
+                resultRows.append(resultRow)
+                resultRow = []
+
+            df = pd.DataFrame(resultRows)
+            fileName = os.path.join(self.workspace, self.nowDate.split("-")[0] + "_qghlsq.txt")
+            df.to_csv(fileName, index = False,
+                        header = False, mode = "a+")
+            logging.info("[INFO]finish crawling qghlsq...")
+
+        return None
+
+
     def run_all(self):
         logging.info("[INFO]crawl all...")
-        self.create_file()
-        self.crawl_cjhb()
-        self.crawl_cjll()
-        self.crawl_hh()
-        self.crawl_zj()
+        self.create_file() 
+
+        self.crawl_cjhb()        # 湖北省常用水情报表
+        self.crawl_cjll()        # 长江流域重要站实时水情表
+        self.crawl_hh()          # 黄河水文站
+        self.crawl_zj()          # 珠江流域主要水库最新水情信息
+        self.crawl_qghlsq()      # 全国河流水情
+
         logging.info("[INFO]finish crawl all...")
 
 def main():
@@ -256,7 +308,7 @@ def main():
     log.addHandler(handler)
     log.setLevel(logging.INFO)
 
-    workspace = r"D:\Water_station"
+    workspace = r"C:\Users\lwx\Desktop\test"
 
     nowCrawler = NowCrawler(workspace)
     nowCrawler.run_all()

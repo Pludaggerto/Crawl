@@ -39,8 +39,3 @@ class Baser(object):
         begin.reverse()
         end.reverse()
         return begin, end
-
-
-
-
-

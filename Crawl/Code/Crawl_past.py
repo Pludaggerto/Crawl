@@ -85,9 +85,11 @@ class PastcjhbCrawler(Baser):
     def __del__(self):
         logging.info("[INFO]finish crawling changjiang in hubei...")
 
-    def get_url(self, date):
-        # crawl everyday 8:00
-        suffix = "GetRiverData?date=" + str(date) + "+08%3A00"
+    def get_url(self, date, hour = 8):
+        if hour < 10:
+            suffix = "GetRiverData?date=" + str(date) + "+0" +str(hour) +  "%3A00"
+        else:
+            suffix = "GetRiverData?date=" + str(date) + "+" +str(hour) +  "%3A00"
         return self.url + suffix
 
     def get_data(self, beginDate, endDate, en = False):
@@ -132,6 +134,53 @@ class PastcjhbCrawler(Baser):
                 df = df[[0,1,2,3,4,6]]
                 df.to_csv(fileName_cjhb, index = False,
                             header = False, mode = "a+")
+
+        return fileName_cjhb
+
+    def get_data_by_hour(self, beginDate, endDate, en = False):
+
+        fileName_cjhb  = os.path.join(self.workspace, "cjhb_per_hour.txt")
+        if not os.path.exists(fileName_cjhb):
+            f = open(fileName_cjhb, 'w+', newline="", encoding='utf-8')
+            writer = csv.writer(f)
+            if en:
+                writer.writerow(["Date","hour", "ID", "River", "Station", "WaterLevel(m)", "Discharge(m3/s)"])                   
+            else:
+                writer.writerow(["日期", "时间", "站点编号", "河名", "站名","水位", "水势", "流量", "比昨日涨落"
+                                "设防水位", "警戒水位", "保证水位", "MAXZ"])                   
+            f.close()
+
+        begin, end = self.num_to_year(beginDate, endDate)
+        for j in range(len(begin)):
+            logging.info("[INFO]crawling " + begin[j] + " "+ end[j] +  " ...")
+            date = self.create_assist_date(begin[j], end[j])
+            for i in trange(len(date)):
+                for hour in range(0, 24, 1):
+                    time.sleep(1.5)    
+                    response = requests.get(url = self.get_url(date[i], hour), headers = self.headers)
+                    response.encoding = "utf-8"
+                    jsons = json.loads(response.text)
+                    nameList = ['STCD',   'RVNM',  'STNM',  'Z',  'WPTN',  'Q',  'YZ',  'FRZ',  'WRZ',  'GRZ',  'MAXZ']
+                    nameList2 = ['STCD1', 'RVNM1', 'STNM1', 'Z1', 'WPTN1', 'Q1', 'YZ1', 'FRZ1', 'WRZ1', 'GRZ1', 'MAXZ1']
+                    row1_all = []
+                    row2_all = []
+                    row_all  = []
+                    for js in jsons["rows"]:
+                        row1 = [date[i], hour]
+                        row2 = [date[i], hour]
+                        for name1 in nameList:
+                            row1.append(js[name1])
+                        for name2 in nameList2:
+                            row2.append(js[name2])
+                        row1_all.append(row1)
+                        row2_all.append(row2)
+                    [row1_all.append(i) for i in row2_all]
+                    row_all = row1_all
+                    df = pd.DataFrame(row_all)
+                    if en:
+                        df = df[[0,1,2,3,4,6]]
+                    df.to_csv(fileName_cjhb, index = False,
+                                header = False, mode = "a+")
 
         return fileName_cjhb
 
@@ -194,15 +243,15 @@ def main():
     workspace = r"C:\Users\lwx\Desktop\discharge"
     pastcjhbCrawler = PastcjhbCrawler(workspace)
 
-    #parser = argparse.ArgumentParser()
-    #parser.add_argument('beginDate', help="PixC annotation file", type=int)
-    #args = vars(parser.parse_args())
-    #beginDate = args["beginDate"]
-    beginDate = 2012
-    endDate = 2013
-    #pastcjhbCrawler.get_data(beginDate, endDate, 1)
+    parser = argparse.ArgumentParser()
+    parser.add_argument('beginDate', help="PixC annotation file", type=int)
+    args = vars(parser.parse_args())
+    beginDate = args["beginDate"]
+    #beginDate = 2022
+    endDate = beginDate + 1
+    pastcjhbCrawler.get_data_by_hour(beginDate, endDate)
     #pastcjhbCrawler.post()
-    pastcjhbCrawler.validation()
+    #pastcjhbCrawler.validation()
 
 
 if __name__ == '__main__':
