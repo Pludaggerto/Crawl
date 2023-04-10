@@ -6,24 +6,24 @@ http://www.pearlwater.gov.cn/sssq/
 http://61.163.88.227:8006/hwsq.aspx?sr=0nkRxv6s9CTRMlwRgmfFF6jTpJPtAv87
 # 长江流域重要站实时水情表(cjll)
 http://www.cjh.com.cn/sssqcwww.html
-# 全国河流水情(qghlsq)
+# 全国河流水情(qghl)
 http://xxfb.mwr.cn/sq_djdh.html
-# 湖北省内主要流域河道站实时水情
+# 湖北省内主要流域河道站实时水情(hbzy)
 http://113.57.190.228:8001/web/Report/BasicSQReport
-# 广东省水利厅讯情发布系统
+# 广东省水利厅讯情发布系统(gdxq)
 http://210.76.80.76:9001/Report/WaterReport.aspx
-# 四川河道水情信息查询
-https://tftb.sczwfw.gov.cn:8085/hos-server/pub/jmas/jmasbucket/jmopen_files/unzip/a676705f70614b18a4e8348d88f9d9c6/sltqszdhdsssqxxpc/index.html#/
-# 江西重点江河站水情
+# 江西重点江河站水情(jxzd)
 http://weixin.jxsswj.cn/jxsw/rthy/realtimeRiverInfo.html
-# 湖南公众服务一张图
-http://yzt.hnswkcj.com:9090/#/
-# 全国大型水库实时水情
+# 全国大型水库实时水情(qgdx)
 http://xxfb.mwr.cn/sq_dxsk.html
 # 北京市大中型水库水情日报
 http://nsbd.swj.beijing.gov.cn/dzxsksq.html
-# 江苏水文信息
+# 江苏水文信息(jssw)
 http://221.226.28.67:88/jsswxxSSI/Web/Default.html?m=2
+# 四川河道水情信息查询(schd)
+https://tftb.sczwfw.gov.cn:8085/hos-server/pub/jmas/jmasbucket/jmopen_files/unzip/a676705f70614b18a4e8348d88f9d9c6/sltqszdhdsssqxxpc/index.html#/
+# 湖南公众服务一张图
+http://yzt.hnswkcj.com:9090/#/
 # 太湖流域片水文信息服务
 http://info.tbasw.cn/?Menu=0
 # 安徽水信息
