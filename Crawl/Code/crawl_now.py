@@ -70,12 +70,14 @@ class NowCrawler(Baser):
         self.gdxq_url = "http://210.76.80.76:9001/Report/WaterReport.aspx"
         self.jxzd_url = "http://weixin.jxsswj.cn/jxsw/rthy/realtimeRiverInfo.html"
         self.qgdx_url = "http://xxfb.mwr.cn/hydroSearch/greatRsvr"
+        self.hngz_url = "http://yzt.hnswkcj.com:9090/#/"
 
         self.nowDate  = datetime.datetime.now().strftime('%Y-%m-%d')
-        self.headers={
+        self.headers  = {
                         'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36',
                         }
         self.workspace = workspace
+
 
     def get_cjhb_url(self, date):
 
@@ -87,18 +89,39 @@ class NowCrawler(Baser):
         suffix = "GetRiverReportData?date=" + str(date) + "+08%3A00"
         return self.hbzy_url + suffix
 
+    def get_hngzL_url(self):
+        # "http://58.20.42.94:9090/api/core/rvsr/detail/2023-04-11%2000:00/2023-04-11%2016:23/qb"
+
+        preffix   = "http://58.20.42.94:9090/api/core/rvsr/detail/"
+        startDate = self.nowDate + "%2000:00/"
+        endDate   = self.nowDate + "%2016:00/qb/" 
+        
+        return preffix + startDate + endDate
+
+    def get_hngzR_url(self):
+        # "http://58.20.42.94:9090/api/core/river/rsvr/2023-04-11%2000:00/2023-04-11%2016:33/qb/"
+
+        preffix   = "http://58.20.42.94:9090/api/core/river/rsvr/"
+        startDate = self.nowDate + "%2000:00/"
+        endDate   = self.nowDate + "%2016:00/qb/" 
+        
+        return preffix + startDate + endDate
+
     def create_file(self):
+
         fileName_hh     = os.path.join(self.workspace, self.nowDate.split("-")[0] + "_hh.txt")
-        fileName_zj_re  = os.path.join(self.workspace, self.nowDate.split("-")[0] + "_zj_re.txt")
+        fileName_zj_re  = os.path.join(self.workspace, self.nowDate.split("-")[0] + "_zj_re.txt") # reservoir
         fileName_zj_ri  = os.path.join(self.workspace, self.nowDate.split("-")[0] + "_zj_ri.txt")
         fileName_cjhb   = os.path.join(self.workspace, self.nowDate.split("-")[0] + "_cjhb.txt")
         fileName_cjll   = os.path.join(self.workspace, self.nowDate.split("-")[0] + "_cjll.txt")
         fileName_qghl   = os.path.join(self.workspace, self.nowDate.split("-")[0] + "_qghl.txt")
         fileName_hbzy   = os.path.join(self.workspace, self.nowDate.split("-")[0] + "_hbzy.txt")
-        fileName_gdxqR  = os.path.join(self.workspace, self.nowDate.split("-")[0] + "_gdxqR.txt")
-        fileName_gdxqL  = os.path.join(self.workspace, self.nowDate.split("-")[0] + "_gdxqL.txt")
+        fileName_gdxqR  = os.path.join(self.workspace, self.nowDate.split("-")[0] + "_gdxqR.txt") # river
+        fileName_gdxqL  = os.path.join(self.workspace, self.nowDate.split("-")[0] + "_gdxqL.txt") # reservoir
         fileName_jxzd   = os.path.join(self.workspace, self.nowDate.split("-")[0] + "_jxzd.txt")
         fileName_qgdx   = os.path.join(self.workspace, self.nowDate.split("-")[0] + "_qgdx.txt")
+        fileName_hngzR  = os.path.join(self.workspace, self.nowDate.split("-")[0] + "_hngzR.txt") # river
+        fileName_hngzL  = os.path.join(self.workspace, self.nowDate.split("-")[0] + "_hngzL.txt") # reservoir
 
         if not os.path.exists(fileName_hh):
             f = open(fileName_hh, 'w+', newline="", encoding='utf-8')
@@ -155,6 +178,22 @@ class NowCrawler(Baser):
             f = open(fileName_qgdx, 'w+', newline="", encoding='utf-8')
             writer = csv.writer(f)
             writer.writerow(["damel", "时间", "省", "流域", "河名", "库水位(米)", "编号", "站名","蓄水量(百万3)", "入库(米3/秒)"])
+
+        if not os.path.exists(fileName_hngzL):
+            f = open(fileName_hngzL, 'w+', newline="", encoding='utf-8')
+            writer = csv.writer(f)
+            writer.writerow(["时间", "水位", "W", "RWPTN", "入库", "出库", "RSVRTP", \
+                              "HHRZ", "HHRZTM", "汛限水位", "比讯限", "ADDVCD" "站名", "DRNA", "FRGRD", 'HNNM', 'LGTD', \
+                              "LTTD", "河流", "站点编号", "站点位置", "STTP", "HN_NUM"])
+
+        if not os.path.exists(fileName_hngzR):
+            f = open(fileName_hngzR, 'w+', newline="", encoding='utf-8')
+            writer = csv.writer(f)
+            writer.writerow(["时间", "水位", "流量", "WPTN", "警戒水位", "OBHTZ", "OBHTZTM", "比警戒", "HIS", "ADDVCD",
+                              "市", "ATCUNIT", "BGFRYM", "主流", "基本站", "DRNA", "DSTRVM", "DTMEL", "基准面", "DTPR", 
+                              "ESSTYM", "FRGRD", "支流", "LGTD", "LOCALITY", "LTTD", "MODITIME", "PHCD", "河流", "STAZT", 
+                              "STBK",'STCD', "站点编号", "站点位置", "STTP", "USFL", "HN_NUM"])
+
 
     def crawl_hh(self):
 
@@ -433,7 +472,6 @@ class NowCrawler(Baser):
         browser.get(self.jxzd_url)
         html = browser.page_source
         soup = BeautifulSoup(html,'html.parser')
-        f.close()
 
         # River
         fileName = os.path.join(self.workspace, self.nowDate.split("-")[0] + "_jxzd.txt")
@@ -464,7 +502,7 @@ class NowCrawler(Baser):
         response = requests.get(url = self.qgdx_url, headers = self.headers)
         response.encoding = "utf-8"
         jsons = json.loads(response.text)
-        time.sleep(0.5)    
+         
 
         if jsons["returncode"] != 0:
              logging.info("[INFO]error in qgdx crawling...")
@@ -497,10 +535,80 @@ class NowCrawler(Baser):
 
             return None
 
+    def crawl_hngz(self):
+
+        logging.info("[INFO]crawling hngz...")
+        time.sleep(0.5)    
+
+        # reservoir
+        response = requests.get(url = self.get_hngzL_url(), headers = self.headers)
+        response.encoding = "utf-8"
+        jsons = json.loads(response.text)
+        time.sleep(0.5)    
+        # ["时间", "当前水位", "W", "RWPTN", "入库", "出库", "RSVRTP", \\
+        # "HHRZ", "HHRZTM", "汛限水位", "比讯限", "ADDVCD" "站名", "DRNA", "FRGRD", 'HNNM', 'LGTD', \\
+        # "LTTD", "河流", "站点编号", "站点位置", "STTP", "HN_NUM"]
+        dataList = list(jsons)
+        resultRows = []
+        resultRow = []
+        resultRowNames = ['TM', 'RZ', 'W', 'RWPTN', 'INQ', 'OTQ', 'RSVRTP', 'HHRZ', 
+                          'HHRZTM', 'FSLTDZ', 'BXX', 'ADDVCD', 'DRNA', 'FRGRD', 'HNNM', 'LGTD', 
+                          'LTTD', 'RVNM', 'STCD', 'STLC', 'STNM', 'STTP', 'HN_NUM']
+        for data in dataList:
+
+            for name in resultRowNames:
+                if name != "tm" and type(data[name]) == str:
+                    resultRow.append(data[name].replace(" ",""))
+                else:
+                    resultRow.append(data[name])
+
+            resultRows.append(resultRow)
+            resultRow = []
+
+            df = pd.DataFrame(resultRows)
+            fileName = os.path.join(self.workspace, self.nowDate.split("-")[0] + "_hngzL.txt")
+            df.to_csv(fileName, index = False,
+                        header = False, mode = "a+")
+
+        # river
+        response = requests.get(url = self.get_hngzR_url(), headers = self.headers)
+        response.encoding = "utf-8"
+        jsons = json.loads(response.text)
+        time.sleep(0.5)    
+        # ["时间", "水位", "流量", "WPTN", "警戒水位", "OBHTZ", "OBHTZTM", "比警戒", "HIS", "ADDVCD",
+        #  "市", "ATCUNIT", "BGFRYM", "主流", "基本站", "DRNA", "DSTRVM", "DTMEL", "基准面", "DTPR", 
+        #  "ESSTYM", "FRGRD", "支流", "LGTD", "LOCALITY", "LTTD", "MODITIME", "PHCD", "河流", "STAZT", 
+        #  "STBK", 'STCD', "站点编号", "站点位置", "STTP", "USFL", "HN_NUM"]
+        dataList = list(jsons)
+        resultRows = []
+        resultRow = []
+        resultRowNames = ['TM', 'Z', 'Q', 'WPTN', 'WRZ', 'OBHTZ', 'OBHTZTM', 'BJJ', 
+                          'HIS', 'ADDVCD', 'ADMAUTH', 'ATCUNIT', 'BGFRYM', 'BSNM', 'COMMENTS', 
+                          'DRNA', 'DSTRVM', 'DTMEL', 'DTMNM', 'DTPR', 'ESSTYM', 'FRGRD', 'HNNM', 
+                          'LGTD', 'LOCALITY', 'LTTD', 'MODITIME', 'PHCD', 'RVNM', 'STAZT', 'STBK', 
+                          'STCD', 'STLC', 'STNM', 'STTP', 'USFL', 'HN_NUM']
+        for data in dataList:
+
+            for name in resultRowNames:
+                if name != "tm" and type(data[name]) == str:
+                    resultRow.append(data[name].replace(" ",""))
+                else:
+                    resultRow.append(data[name])
+
+            resultRows.append(resultRow)
+            resultRow = []
+
+            df = pd.DataFrame(resultRows)
+            fileName = os.path.join(self.workspace, self.nowDate.split("-")[0] + "_hngzR.txt")
+            df.to_csv(fileName, index = False,
+                        header = False, mode = "a+")
+
+
     def run_all(self):
         logging.info("[INFO]crawl all...")
         self.create_file() 
         
+        self.crawl_hngz()        # 湖南公众服务一张图
         self.crawl_qgdx()        # 全国大型水库实时水情
         self.crawl_gdxq()        # 广东省水利厅讯情发布系统
         self.crawl_jxzd()        # 江西重点江河站水情
