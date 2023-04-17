@@ -1,3 +1,4 @@
+// R：河流相关 L：水库湖泊相关
 # 湖北省常用水情报表(cjhb)
 http://113.57.190.228:8001/web/Report/RiverReport
 # 珠江流域主要水库最新水情信息(zj)
@@ -24,13 +25,13 @@ http://nsbd.swj.beijing.gov.cn/dzxsksq.html
 https://tftb.sczwfw.gov.cn:8085/hos-server/pub/jmas/jmasbucket/jmopen_files/unzip/a676705f70614b18a4e8348d88f9d9c6/sltqszdhdsssqxxpc/index.html#/
 # 湖南公众服务一张图(hngz)
 http://yzt.hnswkcj.com:9090/#/
-# 太湖流域片水文信息服务
+# 太湖流域片水文信息服务(thly)
 http://info.tbasw.cn/?Menu=0
-# 安徽水信息
+# 安徽水信息(ansx)
 http://yc.wswj.net/ahsxx/LOL/?refer=upl&to=public_public
-# 宁波智慧水利平台
-http://sw.nbzhsl.cn/#/?url=waterRealTime
-http://sw.nbzhsl.cn/#/?url=reservoirWater
+# 宁波智慧水利平台(nbsl)
+http://sw.nbzhsl.cn/#/?url=waterRealTime // R
+http://sw.nbzhsl.cn/#/?url=reservoirWater // L
 # 淅江省水雨情监测预警展示平台
 https://sqfb.slt.zj.gov.cn/weIndex.html#/main/map/realtime-water
 # 厦门利信息网~讯情发布系统
