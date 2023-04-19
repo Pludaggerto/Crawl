@@ -4,14 +4,14 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>4618b47a-9398-4e03-b5f1-3714791d0394</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>Code\crawl_now.py</StartupFile>
+    <StartupFile>Code\history\crawl_schd.py</StartupFile>
     <SearchPath>Baser</SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
     <OutputPath>.</OutputPath>
     <Name>Crawl</Name>
     <RootNamespace>Crawl</RootNamespace>
     <TestFramework>Pytest</TestFramework>
-    <InterpreterId>Global|VisualStudio|geos</InterpreterId>
+    <InterpreterId>CondaEnv|CondaEnv|geos</InterpreterId>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <DebugSymbols>true</DebugSymbols>
@@ -25,14 +25,16 @@
     <Compile Include="Baser\Baser.py" />
     <Compile Include="Code\count.py" />
     <Compile Include="Code\crawl_now.py" />
-    <Compile Include="Code\Crawl_past.py" />
-    <Compile Include="Code\Post_cjhb.py" />
-    <Compile Include="Code\Post_hh.py" />
-    <Compile Include="Code\Writebat.py" />
-    <Compile Include="Code\Crawl_hh.py" />
+    <Compile Include="Code\history\Crawl_past.py" />
+    <Compile Include="Code\history\crawl_schd.py" />
+    <Compile Include="Code\history\Post_cjhb.py" />
+    <Compile Include="Code\history\Post_hh.py" />
+    <Compile Include="Code\history\Writebat.py" />
+    <Compile Include="Code\history\Crawl_hh.py" />
     <Compile Include="test\test.py" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Code\history\" />
     <Folder Include="File\" />
     <Folder Include="File\Auxiliary\" />
     <Folder Include="File\Auxiliary\hh\" />
@@ -90,6 +92,7 @@
     <Content Include="station.md" />
   </ItemGroup>
   <ItemGroup>
+    <InterpreterReference Include="CondaEnv|CondaEnv|geos" />
     <InterpreterReference Include="Global|VisualStudio|geos" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />

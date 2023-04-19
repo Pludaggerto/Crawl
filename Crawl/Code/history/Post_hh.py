@@ -17,7 +17,6 @@ class PostProcesser(object):
         self.stationFiles = []
 
     def filtering(self):
-
         
         txtList = glob.glob(os.path.join(self.dataFolder, "*.txt"))
 
