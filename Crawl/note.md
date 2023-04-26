@@ -86,3 +86,154 @@ CookieÔÚÉú³ÉÊ±»á±»Ö¸¶¨Ò»¸öExpire Öµ£¬¸ÃÖµ¾ÍÊÇCookieµÄÉú´æÖÜÆÚ¡£CookieÔÚÕâ¸öÖÜÆÚÄ
 WebSocketÐ­ÒéÊ¹¿Í»§¶ËºÍ·þÎñÆ÷¶ËÖ®¼äµÄÊý¾Ý½»»»±äµÃ¸ü¼Ó¼òµ¥£¬ËüÔÊÐí½»»¥Ë«·½´´½¨³Ö¾ÃÁ¬½Ó£¬Í¬Ê±Ö§³Ö·þÎñÆ÷¶ËÖ÷¶¯Ïò¿Í»§¶ËÍÆËÍÊý¾Ý¡£
 
 ÔÚWebSocketÐ­Òé³öÏÖÖ®Ç°£¬Èç¹ûWebÓ¦ÓÃÏëÒªÊµÏÖÏûÏ¢ÍÆËÍÓëÊµÊ±Êý¾ÝÕ¹Ê¾¹¦ÄÜ£¬ÄÇÃ´ÐèÒªÊ¹ÓÃÂÖÑ¯µÄÊÖ¶Î¡£ÂÖÑ¯Ö¸µÄÊÇ¿Í»§¶ËÒÔÌØ¶¨µÄÊ±¼ä¼ä¸ôÏò·þÎñÆ÷¶Ë·¢³öHTTPÇëÇó£¬·þÎñÆ÷¶Ë·µ»Ø×îÐÂµÄÊý¾Ý¸ø¿Í»§¶ËµÄ¹ý³Ì¡£ÕâÖÖ´«Í³Ä£Ê½µÄÈ±µãºÜÃ÷ÏÔ£¬¿Í»§¶ËÐèÒª²»¶ÏµØÏò·þÎñÆ÷¶Ë·¢³öÇëÇó£¬¶øHTTPÇëÇó¿ÉÄÜ°üº¬½Ï³¤µÄÍ·²¿£¬µ«ÆäÖÐÕæÕýÓÐÐ§µÄÊý¾Ý¿ÉÄÜÖ»ÊÇºÜÐ¡µÄÒ»²¿·Ö£¬ÏÔÈ»ÕâÑù»áÀË·ÑºÜ¶àµÄ´ø¿í×ÊÔ´¡£  
+
+# ÅÀ³æÓë·´ÅÀ³æ
+
+## ¶¯Ì¬ÍøÒ³ÓëÍøÒ³Ô´´úÂë  
+
+- ¾²Ì¬ÍøÒ³Ö¸µÄÊÇÍøÒ³Ö÷ÌåÄÚÈÝµÄäÖÈ¾¹¤×÷ÔÚ·þÎñÆ÷¶ËÍê³É£¬²¢Í¨¹ýÏìÓ¦ÕýÎÄ·µ»ØµÄÍøÒ³¡£
+- ¶¯Ì¬ÍøÒ³Ö¸µÄÊÇÖ÷ÌåÄÚÈÝ»òÕßÈ«²¿ÄÚÈÝ¶¼ÐèÒª¿Í»§¶ËÖ´ÐÐJavaScript ´úÂëÀ´¼ÆËã»òäÖÈ¾µÄÍøÒ³¡£  
+
+## ·´ÅÀ³æ
+
+±¾ÊéÔ¼¶¨£¬ÏÞÖÆÅÀ³æ³ÌÐò·ÃÎÊ·þÎñÆ÷×ÊÔ´ºÍ»ñÈ¡Êý¾ÝµÄÐÐÎª³ÆÎª·´ÅÀ³æ¡£  
+
+**Ö÷¶¯ÐÍ·´ÅÀ³æ**£º¿ª·¢ÕßÓÐÒâÊ¶µØÊ¹ÓÃ¼¼ÊõÊÖ¶ÎÇø·ÖÕý³£ÓÃ»§ºÍÅÀ³æ£¬²¢ÏÞÖÆÅÀ³æ¶ÔÍøÕ¾µÄ·ÃÎÊÐÐÎª£¬ÈçÑéÖ¤ÇëÇóÍ·ÐÅÏ¢¡¢ÏÞÖÆ·ÃÎÊÆµÂÊ¡¢Ê¹ÓÃÑéÖ¤ÂëµÈ¡£
+
+**±»¶¯ÐÍ·´ÅÀ³æ**£ºÎªÁËÌáÉýÓÃ»§ÌåÑé»ò½ÚÊ¡×ÊÔ´£¬ÓÃÒ»Ð©¼¼Êõ¼ä½ÓÌá¸ßÅÀ³æ·ÃÎÊÄÑ¶ÈµÄÐÐÎª£¬±ÈÈçÊý¾Ý·Ö¶Î¼ÓÔØ¡¢µã»÷ÇÐ»»±êÇ©Ò³¡¢Êó±êÐüÍ£Ô¤ÀÀÊý¾ÝµÈ¡£  
+
+# ÐÅÏ¢Ð£ÑéÐÍ·´ÅÀ³æ  
+
+ÐÅÏ¢Ð£ÑéÖÐµÄ¡°ÐÅÏ¢¡±Ö¸µÄÊÇ¿Í»§¶Ë·¢ÆðÍøÂçÇëÇóÊ±µÄÇëÇóÍ·ºÍÇëÇóÕýÎÄ£¬¶ø¡°Ð£Ñé¡±Ö¸µÄÊÇ·þÎñÆ÷¶ËÍ¨¹ý¶ÔÐÅÏ¢µÄÕýÈ·ÐÔ¡¢ÍêÕûÐÔ»òÎ¨Ò»ÐÔ½øÐÐÑéÖ¤»òÅÐ¶Ï£¬´Ó¶øÇø·ÖÕý³£ÓÃ»§ºÍÅÀ³æ³ÌÐòµÄÐÐÎª¡£  
+
+## User-Agent ·´ÅÀ³æ  
+
+³ýÁËUser-AgentÖ®Íâ£¬³£¼ûµÄÓÃÓÚ·´ÅÀ³æµÄÍ·Óò»¹ÓÐ Host ºÍ Referer¡£ÕâÖÖÑéÖ¤ÇëÇóÍ·ÐÅÏ¢ÖÐÌØ¶¨Í·ÓòµÄ·½Ê½¼È¿ÉÒÔÓÐÐ§µØÆÁ±Î³¤ÆÚÎÞÈËÎ¬»¤µÄÅÀ³æ³ÌÐò£¬Ò²¿ÉÒÔ½«Ò»Ð©ÅÀ³æ³õÑ§Õß·¢ÆðµÄÍøÂçÇëÇó¾ÜÖ®ÃÅÍâ£¬µ«ÊÇ¶ÔÓÚÒ»Ð©¾­Ñé·á¸»µÄÅÀ³æ¹¤³ÌÊ¦£¬»òÐí»¹ÐèÒª¸üÇÉÃîµÄ·´ÅÀ³æÊÖ¶Î¡£  
+
+## Cookie·´ÅÀ³æ
+
+![image-20230418222941993](note.assets/image-20230418222941993.png)
+
+ÎÒÃÇË¼¿¼ÈçºÎ½« Cookie ºÍ JavaScript ½áºÏÆðÀ´ÊµÏÖ·´ÅÀ³æ¡£  Èç¹ûÔÚ HTML ´úÂëÖÐÒýÈëÒ»¸ö¿ÉÒÔ½«ä¯ÀÀÆ÷ÖØ¶¨Ïòµ½Ä¿±êÒ³ÃæµÄ JavaScript ÎÄ¼þ£¬²¢ÇÒÔÚÕâ¸öÎÄ¼þÖÐÊµÏÖËæ»ú×Ö·û´®Éú³ÉºÍCookie ÉèÖÃµÄ¹¦ÄÜ£¬ÄÇÃ´·þÎñÆ÷¶ËÖ»ÐèÒªÐ£Ñé Cookie ÖµµÄ¹æÔò¼´¿É¡£  
+
+ÕâÖÖËæ»ú±ä»¯µÄ Cookie Öµ¿´ÆðÀ´ºÜ»£ÈË£¬µ«ÊÇËüÒÀ¾ÉÃ»ÓÐ½â¾öÍ¬Ò»¸öÖµ³ÖÐø¿ÉÓÃµÄÎÊÌâ¡£¼´Ê¹ÉèÖÃÁË Cookie µÄ¹ýÆÚÊ±¼ä£¬ÕâÖÖÓÉ¹Ì¶¨Î»ÖÃºÍ¹Ì¶¨ÊýÁ¿×Ö·ûÆ´½ÓµÄ×Ö·û´®ÈÔÈ»ºÜÈÝÒ×±»¿´´©¡£
+
+¿ª·¢ÕßÒ²·¢ÏÖÁËÕâÀàÎÊÌâ£¬ÓÚÊÇÔÚ JavaScript ´úÂëÖÐÉú³Éµ±Ç°Ê±¼äµÄÊ±¼ä´Á£¬½«Ê±¼ä´ÁÓëËæ»ú×Ö·û´®Æ´½ÓºóÔÙ×÷Îª Cookie Öµ·¢ÆðÇëÇó¡£ÕâÊ±ºò nginx ²»½öÐèÒª°´¹æÔòÐ£ÑéËæ»ú×Ö·û´®£¬»¹ÐèÒª»ñÈ¡·þÎñÆ÷µÄµ±Ç°Ê±¼ä´Á£¬½« Cookie ÖµÖÐÈ¡³öµÄÊ±¼ä´ÁÓëµ±Ç°Ê±¼ä´Á½øÐÐ²îÖµ¼ÆËã£¬µ±Ê±¼ä²îÖµ³¬¹ýÒ»¶¨µÄÊ±¼ä£¨Èç 5 Ãë£©£¬Ôò¿ÉÒÔÈÏ¶¨CookieÊÇÎ±ÔìµÄ  
+
+# Ç©ÃûÑéÖ¤·´ÅÀ³æ
+
+Ç©ÃûÊÇ¸ù¾ÝÊý¾ÝÔ´½øÐÐ¼ÆËã»ò¼ÓÃÜµÄ¹ý³Ì£¬Ç©ÃûµÄ½á¹ûÊÇÒ»¸ö¾ßÓÐÎ¨Ò»ÐÔºÍÒ»ÖÂÐÔµÄ×Ö·û´®¡£Ç©Ãû½á¹ûµÄÌØÐÔÊ¹µÃËü³ÉÎªÑéÖ¤Êý¾ÝÀ´Ô´ºÍÊý¾ÝÍêÕûÐÔµÄÌõ¼þ£¬¿ÉÒÔÓÐÐ§±ÜÃâ·þÎñÆ÷¶Ë½«Î±ÔìµÄÊý¾Ý»ò±»´Û¸ÄµÄÊý¾Ýµ±³ÉÕý³£Êý¾Ý´¦Àí¡£
+
+![image-20230418224215400](note.assets/image-20230418224215400.png)
+
+ÈçËæ»úÉú³ÉµÄÊý×Ö
+
+±¾´ÎµÄ·´ÅÀ³æÀûÓÃ JavaScript Éú³ÉËæ»úÖµ£¬ÓëÖ®Ç°µÄËæ»úÖµ²»Í¬£¬Õâ´ÎµÄËæ»úÖµÖÐ°üº¬Ê±¼ä´ÁºÍ MD5 ¼ÓÃÜÖµ¡£Ç©ÃûÑéÖ¤ÓÐºÜ¶àÖÖÊµÏÖ·½Ê½£¬µ«Ô­Àí¶¼ÊÇÏàÍ¬µÄ£ºÓÉ¿Í»§¶ËÉú³ÉÒ»Ð©Ëæ»úÖµºÍ²»¿ÉÄæµÄ MD5 ¼ÓÃÜ×Ö·û´®£¬²¢ÔÚ·¢ÆðÇëÇóÊ±½«ÕâÐ©Öµ·¢ËÍ¸ø·þÎñÆ÷¶Ë¡£·þÎñÆ÷¶ËÊ¹ÓÃÏàÍ¬µÄ·½Ê½¶ÔËæ»úÖµ½øÐÐ¼ÆËãÒÔ¼° MD5 ¼ÓÃÜ£¬Èç¹û·þÎñÆ÷¶ËµÃµ½µÄMD5 ÖµÓëÇ°¶ËÌá½»µÄ MD5 ÖµÏàµÈ£¬¾Í´ú±íÊÇÕý³£ÇëÇó£¬·ñÔò·µ»Ø403¡£ 
+
+ 
+
+# ¶¯Ì¬äÖÈ¾·´ÅÀ³æ
+
+¶¯Ì¬ÍøÒ³ÖÐ³£¼ûµÄ±íÏÖÐÎÊ½ÓÐÏÂÀ­Ë¢ÐÂ¡¢µã»÷ÇÐ»»ºÍÐüÍ£ÏÔÊ¾µÈ¡£  
+
+- ¿ÉÒÔ·ÖÎöjavascriptÇëÇó£¬µ«ÊÇÕâÖÖ·ÖÎöÌ«Âé·³¡£
+- ½ø³Ì¿ÉÒÔÊ¹ÓÃSelenium¡£
+- PuppeteerÊÇÒì²½ÅÀ³æµÄÒ»ÖÖ£¬splashÔòÊÇ·Ö²¼Ê½ÅÀ³æ¡£
+
+Çø±ð
+
+- Selenium Ì×¼þÍ¨¹ýÇý¶¯ä¯ÀÀÆ÷Ö´ÐÐ²Ù×÷£¬±¾ÖÊÉÏÊ¹ÓÃä¯ÀÀÆ÷¡£
+- Puppeteer Êµ¼ÊÉÏÍ¨¹ý API ¿ØÖÆChromium »ò Chrome ä¯ÀÀÆ÷¡£
+- Splash »ùÓÚ¿ªÔ´µÄä¯ÀÀÆ÷ÒýÇæ WebKit  
+
+# ÎÄ±¾»ìÏý·´ÅÀ³æ  
+
+³£¼ûµÄÎÄ±¾»ìÏýÊÖ¶ÎÓÐÍ¼Æ¬Î±×°¡¢ÎÄ×ÖÓ³ÉäºÍ×Ô¶¨Òå×ÖÌåµÈ¡£  
+
+## Í¼Æ¬Î±×°
+
+- ÏòÄ¿±êÍøÕ¾·¢ÆðÍøÂçÇëÇó¡£
+- Ê¹ÓÃ Parsel ¿â´ÓÏìÓ¦ÕýÎÄÖÐÌáÈ¡Í¼Æ¬Ãû³Æ£¬²¢½«ËüÓë URL Æ´½Ó³ÉÍêÕûµÄµØÖ·¡£
+- ÏòÍ¼Æ¬·¢ÆðÍøÂçÇëÇó¡£
+- ´ÓÏìÓ¦ÕýÎÄÖÐÌáÈ¡Í¼Æ¬ÄÚÈÝ£¬²¢Ê¹ÓÃ¹âÑ§×Ö·ûÊ¶±ð¼¼Êõ£¨PyTesseract¿â£©´ÓÍ¼Æ¬ÖÐÌáÈ¡ÎÄ×Ö  
+
+## SVG Ó³Éä·´ÅÀ³æ 
+
+ÓÃÊ¸Á¿Í¼ÐÎ´úÌæ¾ßÌåµÄÎÄ×Ö£¬²»»áÓ°ÏìÓÃ»§Õý³£ÔÄ¶Á£¬µ«ÅÀ³æ³ÌÐòÈ´ÎÞ·¨Ïñ¶ÁÈ¡ÎÄ×ÖÄÇÑù»ñµÃ SVG Í¼ÐÎÖÐµÄÄÚÈÝ¡£  
+
+## ×ÖÌå·´ÅÀ³æ
+
+ÔÚ CSS3 Ö®Ç°£¬Web ¿ª·¢Õß±ØÐëÊ¹ÓÃÓÃ»§¼ÆËã»úÉÏÒÑÓÐµÄ×ÖÌå¡£µ«ÊÇÔÚ CSS3 Ê±´ú£¬¿ª·¢Õß¿ÉÒÔÊ¹ÓÃ@font-face ÎªÍøÒ³Ö¸¶¨×ÖÌå£¬¶ÔÓÃ»§¼ÆËã»ú×ÖÌåµÄÒÀÀµ¡£¿ª·¢Õß¿É½«ÐÄÒÇµÄ×ÖÌåÎÄ¼þ·ÅÔÚ Web ·þÎñÆ÷ÉÏ£¬²¢ÔÚ CSS ÑùÊ½ÖÐÊ¹ÓÃËü¡£ÓÃ»§Ê¹ÓÃä¯ÀÀÆ÷·ÃÎÊ Web Ó¦ÓÃÊ±£¬¶ÔÓ¦µÄ×ÖÌå»á±»ä¯ÀÀÆ÷ÏÂÔØµ½ÓÃ»§µÄ¼ÆËã»úÉÏ¡£  
+
+ÓÉÓÚ×ÖÌåµÄ¼ÓÔØºÍÓ³Éä¹¤×÷ÊÇÓÉ CSS Íê³ÉµÄ£¬ËùÒÔ¼´Ê¹ÎÒÃÇ½èÖú Splash¡¢SeleniumºÍ Puppeteer ¹¤¾ßÒ²ÎÞ·¨»ñµÃ¶ÔÓ¦µÄÎÄ×ÖÄÚÈÝ¡£×ÖÌå·´ÅÀ³æÕýÊÇÀûÓÃÁËÕâ¸öÌØµã£¬½«×Ô¶¨Òå×ÖÌåÓ¦ÓÃµ½ÍøÒ³ÖÐÖØÒªµÄÊý¾ÝÉÏ£¬Ê¹µÃÅÀ³æ³ÌÐòÎÞ·¨»ñµÃÕýÈ·µÄÊý¾Ý¡£  
+
+## Í¨ÓÃ½â¾ö°ì·¨
+
+½ØÍ¼²¢ÎÄ×ÖÊ¶±ð¡£
+
+ÊÕ·ÑµÄÎÄ×ÖÊ¶±ð API µÄ×¼È·ÂÊºÍÊ¶±ðÄÜÁ¦¶¼³¬¹ýÃâ·Ñ¿ªÔ´µÄµÚÈý·½¿âPyTesseract£¬µ«¾­¼Ã³É±¾ÊÇÅÀ³æ¹¤³ÌÊ¦²»µÃ²»¿¼ÂÇµÄÎÊÌâ¡£
+
+# ÌØÕ÷Ê¶±ð·´ÅÀ³æ
+
+## WebDriver Ê¶±ð  
+
+ÎÒÃÇ¿ÉÒÔ½«ÅÀ³æµÄÅÀÈ¡¹ý³Ì·ÖÎªÍøÂçÇëÇó¡¢ÎÄ±¾»ñÈ¡ºÍÊý¾ÝÌáÈ¡3¸ö²¿·Ö¡£ÐÅÏ¢Ð£ÑéÐÍ·´ÅÀ³æÖ÷Òª³öÏÖÔÚÍøÂçÇëÇó½×¶Î£¬Õâ¸ö½×¶ÎµÄ·´ÅÀ³æÀíÄîÒÔÔ¤·ÀÎªÖ÷ÒªÄ¿µÄ£¬¾¡¿ÉÄÜ¾Ü¾øÅÀ³æ³ÌÐòµÄÇëÇó¡£¶¯Ì¬äÖÈ¾ºÍÎÄ±¾»ìÏýÔò³öÏÖÔÚÎÄ±¾»ñÈ¡¼°Êý¾ÝÌáÈ¡½×¶Î£¬Õâ¸ö½×¶ÎµÄ·´ÅÀ³æÀíÄîÒÔ±£»¤Êý¾ÝÎªÖ÷ÒªÄ¿µÄ£¬¾¡¿ÉÄÜ±ÜÃâÅÀ³æ»ñµÃÖØÒªÊý¾Ý¡£
+
+ÌØÕ÷Ê¶±ð·´ÅÀ³æÊÇÖ¸Í¨¹ý¿Í»§¶ËµÄÌØÕ÷¡¢ÊôÐÔ»òÓÃ»§ÐÐÎªÌØµãÀ´Çø·ÖÕý³£ÓÃ»§ºÍÅÀ³æ³ÌÐòµÄÊÖ¶Î¡£±¾ÕÂÎÒÃÇÒª½éÉÜµÄÌØÕ÷Ê¶±ð·´ÅÀ³æÒ²ÊÇÒÔÔ¤·ÀÎªÖ÷ÒªÄ¿µÄ£¬Ö±Ö¸ÅÀ³æ³öÏÖµÄÔ´Í·¡£½ÓÏÂÀ´£¬ÎÒÃÇÒ»ÆðÑ§Ï°ÌØÕ÷Ê¶±ð·´ÅÀ³æµÄÔ­ÀíºÍÈÆ¹ý¼¼ÇÉ°É¡£  
+
+Navigator ¶ÔÏó£¨¼´windows.navigator ¶ÔÏó£©µÄwebdriver ÊôÐÔÀ´ÅÐ¶Ï¿Í»§¶ËÊÇ·ñÍ¨¹ý WebDriver Çý¶¯ä¯ÀÀÆ÷¡£Èç¹û¼ì²âµ½¿Í»§¶ËµÄwebdriver ÊôÐÔ£¬ÔòÔÚÎÄÕÂÄÚÈÝ±êÇ©´¦ÏÔÊ¾¡°Çë²»ÒªÊ¹ÓÃ×Ô¶¯»¯²âÊÔ¹¤¾ß·ÃÎÊÍøÒ³¡±£¬·ñÔòÏÔÊ¾ÕýÈ·µÄÎÄÕÂÄÚÈÝ¡£  
+
+navigator.webdriver Ö»ÊÊÓÃÓÚÊ¹ÓÃ WebDriver µÄäÖÈ¾¹¤¾ß£¬¶ÔÓÚ Splash ÕâÖÖÊ¹ÓÃ WebKit ÄÚºË¿ª·¢µÄäÖÈ¾¹¤¾ßÀ´ËµÊÇÎÞÐ§µÄ¡£  
+
+# ÑéÖ¤ÂëÊ¶±ð
+
+**×Ö·ûÑéÖ¤Âë**Ìí¼ÓÁË¸ÉÈÅÐÅÏ¢£¬¿ÉÒÔÓÐÐ§Ôö¼ÓÊ¶±ðÄÑ¶ÈºÍ´íÎóÂÊ¡£³ýÁËÐ±ÏßºÍÔëµãÍâ£¬»¹¿ÉÒÔÊ¹ÓÃ×Ö·ûÅ¤Çú¡¢½Ç¶ÈÐý×ªºÍÎÄ×ÖÖØµþµÈ·½·¨¡£ÓÉÓÚÍ¼ÏñÊ¶±ðÔÚÉî¶ÈÑ§Ï°ÁìÓòÒÑÏàµ±³ÉÊì£¬ËùÒÔÎÒÃÇ²ÅÄÜ¹»ÇáËÉµØÍê³ÉÑéÖ¤ÂëÔ¤²â¹¤×÷¡£±¾Êé¶ÔÉî¶ÈÑ§Ï°ºÍ¾í»ýÉñ¾­ÍøÂç½ö½øÐÐ¼òµ¥µÄ½éÉÜ£¬¸ÐÐËÈ¤µÄ¶ÁÕß¿ÉÒÔÉîÈëÁË½âÏà¹ØÖªÊ¶¡£  
+
+**¼ÆËãÐÍÑéÖ¤Âë**ÆäÊµÒ²ÊÇ×Ö·ûÑéÖ¤ÂëµÄÒ»ÖÖ£¬µ«ËüÔö¼ÓÁËÊýÑ§ÔËËãÂß¼­£¬ËùÒÔÄÑ¶ÈÏà¶Ô½Ï¸ß¡£µ«Ö»ÒªÄÜ¹»Ê¶±ðÍ¼Æ¬ÖÐµÄ×Ö·û£¬¾ÍÄÜ¹»Í¨¹ýÐ£Ñé¡£  
+
+**»¬¶¯Æ´Í¼ÑéÖ¤Âë**·ÖÎª»¬¶¯ºÍÆ´Í¼Á½¸ö²¿·Ö£¬»¬¶¯ÐèÒªÓÃµ½ÈËÀàµÄÐÐÎª£¬¶øÆ´Í¼ÔòÐèÒªÓÃµ½ÈËÀàµÄÊÓ¾õ¡£Í¨¹ýÑéÖ¤µÄ¹Ø¼üÊÇÍ¼Æ¬È±¿Ú£¬Ö»ÒªÄÜ¹»ÕÒµ½È±¿ÚÎ»ÖÃ£¬¾ÍÄÜ¹»Í¨¹ýÑéÖ¤¡£¼ÆËã»úÒªÏëÍ¨¹ýÑéÖ¤£¬±ØÐëÍê³É¶Á¶®ÒªÇó¡¢Ä¿±êÎ»ÖÃ¼ì²â¡¢ÎÄ×ÖÊ¶±ðºÍµã»÷µÈ²Ù×÷¡£Óë±¾ÕÂÇ°¼¸½Ú½éÉÜµÄÑéÖ¤ÂëÏà±È£¬Í¨¹ýÎÄ×ÖµãÑ¡ÑéÖ¤ÂëÐ£ÑéÐèÒªµÄ²½ÖèºÍÄÑ¶È¶¼Ôö¼Ó²»ÉÙ£¬ÕâÒ²ÊÇËü±¸ÊÜÑéÖ¤Âë³§ÉÌºÍÍøÕ¾¾­ÓªÕß»¶Ó­µÄÔ­Òò¡£
+
+**µãÑ¡ÑéÖ¤Âë**µÄ¹Ø¼üÊÇÄ¿±ê¶¨Î»ºÍÊ¶±ð¡£Éî¶ÈÑ§Ï°ÁìÓòµÄÄ¿±ê¼ì²â¼¼ÊõÒÑ¾­·Ç³£³ÉÊì£¬ËüÄÜ¹»°ïÖúÎÒÃÇ¿ìËÙ¶ø×¼È·µØ¶¨Î»µ½Í¼Æ¬ÖÐµÄÄ¿±ê£¬²¢¶ÔÄ¿±ê½øÐÐ·ÖÀà¡£  
+
+# ÆäËûÖªÊ¶
+
+## ±àÂëÓë¼ÓÃÜ
+
+×Ö·û¼¯ÊÇÖ¸¸÷¹ú¼ÒµÄÎÄ×Ö¡¢±êµã·ûºÅ¡¢Í¼ÐÎ·ûºÅºÍÊý×ÖµÈ×Ö·ûµÄ¼¯ºÏ¡£  
+
+Base64 »ùÓÚ 64 ¸ö¿É´òÓ¡×Ö·ûÀ´±íÊ¾ 8 Î»¶þ½øÖÆÊý¾Ý£¬ASCII ±àÂëÊµ¼ÊÉÏÔ¼¶¨ÁË×Ö·ûºÍ¶þ½øÖÆµÄÓ³Éä¹ØÏµ£¬ÈçÐ¡Ð´×ÖÄ¸¡°a¡±¶ÔÓ¦µÄ 8 Î»¶þ½øÖÆÊýÎª 01100001¡£
+
+Base64 ±»¹ã·ºÓ¦ÓÃÔÚ»¥ÁªÍøÖÐ£¬ÓÐ¾­ÑéµÄÅÀ³æ¹¤³ÌÊ¦¿´µ½´øÓÐ¡°==¡±·ûºÅ»òÕß¡°=¡±·ûºÅµÄ×Ö·û´®Ê±£¬×ÔÈ»¾Í»áÈÏÎªÕâÊÇ Base64 ±àÂë×Ö·û´®ºóµÃµ½µÄ½á¹û¡£  
+
+## MD5
+
+MD5 ÏûÏ¢ÕªÒªËã·¨£¨MD5 Message-Digest Algorithm£¬¼ò³Æ MD5£©ÊÇÒ»ÖÖ±»¹ã·ºÊ¹ÓÃµÄÉ¢ÁÐº¯Êý£¬ËüÄÜ¹»½«ÈÎÒâ³¤¶ÈµÄÏûÏ¢×ª»»³É 128 Î»µÄÏûÏ¢ÕªÒª¡£  
+
+- Append Padding Bits
+- Append Length
+- Initialize MD Buffer
+- Process Message in 16-Word Blocks¡£
+- Output
+
+## ·Ç¶Ô³Æ¼ÓÃÜ
+
+¼ÓÃÜºÍ½âÃÜÊ±Ê¹ÓÃÍ¬Ò»¸öÃÜÔ¿µÄ¼ÓÃÜ·½Ê½½Ð×÷¶Ô³Æ¼ÓÃÜ£¬Ê¹ÓÃ²»Í¬ÃÜ
+Ô¿µÄÊÇ·Ç¶Ô³Æ¼ÓÃÜ¡£
+
+Èç¹ûÓÃË½Ô¿¶ÔÊý¾Ý½øÐÐ¼ÓÃÜ£¬ÄÇÃ´Ö»ÓÐÓÃ¶ÔÓ¦µÄ¹«Ô¿²ÅÄÜ¹»½âÃÜÊý¾Ý¡£ÓÉÓÚ¼ÓÃÜºÍ½âÃÜÊ±Ê¹ÓÃµÄÃÜÔ¿ÊÇ²»ÏàÍ¬µÄ£¬ËùÒÔÕâÖÖ¼ÓÃÜ·½Ê½±»³ÆÎª·Ç¶Ô³Æ¼ÓÃÜ¡£  
+
+## JavaScript ´úÂë»ìÏý  
+
+³£ÓÃµÄ»ìÏý·½·¨ÓÐÕýÔòÌæ»»¡¢´úÂë±àÂëºÍ´úÂë¸´ÔÓ»¯µÈ¡£ÎªÁË·ÀÖ¹ÓÐÐÄÈËÔÚä¯ÀÀÆ÷ÖÐµ÷ÊÔ£¬¿ª·¢ÕßÉõÖÁ»áÔÚ´úÂëÖÐ¼ÓÈëÒ»Ð©ÄÜ¹»¸ÉÈÅµ÷ÊÔµÄ´úÂë¡£  
+
+- ÕýÔòÌæ»»Ö®±äÁ¿ÃûÌæ»»  
+- ÕýÔòÌæ»»Ö®½øÖÆÌæ»»
+- ´úÂë±àÂëÖ®Base64  
+
+- ´úÂë±àÂëÖ®AAEncode
+
+- ´úÂë±àÂëÖ®JJEncode  
+
+JavaScript ±àÒëÆ÷µÄÄ¿µÄÊÇ½« JavaScript ´úÂë±àÒëÎª»úÆ÷Âë£¬¶ø»ìÏýÆ÷µÄ´¦Àí½á¹ûÈÔÈ»ÊÇ JavaScript ´úÂë¡£  
+
+ÔÚÊµ¼ÊÏîÄ¿ÖÐÓöµ½µÄ´úÂë»ìÏý¿É²»Ö¹ÕâÃ´¼òµ¥£¬´óÐÍÍøÕ¾µÄ»ìÏý¹æÔòºÍÂß¼­ÊÇ·Ç³£¸´ÔÓµÄ¡£¶Ô³éÏóÓï·¨Ê÷ºÍ»ìÏýÆ÷¸ÐÐËÈ¤µÄ¶ÁÕß£¬¿ÉÒÔÇ°Íù UglifyJS ¹ÙÍøÁË½â¸ü¶àÖªÊ¶¡£  

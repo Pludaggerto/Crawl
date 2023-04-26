@@ -1,8 +1,6 @@
 ﻿import os
 import logging 
 
-
-
 class BatWriter(object):
 
     def __init__(self):

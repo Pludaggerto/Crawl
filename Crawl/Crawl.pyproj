@@ -4,14 +4,14 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>4618b47a-9398-4e03-b5f1-3714791d0394</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>Code\history\crawl_schd.py</StartupFile>
+    <StartupFile>Code\crawl_now.py</StartupFile>
     <SearchPath>Baser</SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
     <OutputPath>.</OutputPath>
     <Name>Crawl</Name>
     <RootNamespace>Crawl</RootNamespace>
     <TestFramework>Pytest</TestFramework>
-    <InterpreterId>CondaEnv|CondaEnv|geos</InterpreterId>
+    <InterpreterId>Global|VisualStudio|geos</InterpreterId>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <DebugSymbols>true</DebugSymbols>
@@ -62,6 +62,8 @@
     <Content Include="File\Auxiliary\hh\huanghe2.shx" />
     <Content Include="File\Auxiliary\hh\Station.txt" />
     <Content Include="File\Auxiliary\nbsl.json" />
+    <Content Include="File\Auxiliary\zj1.json" />
+    <Content Include="File\Auxiliary\zj2.json" />
     <Content Include="File\Auxiliary\zjsq.json" />
     <Content Include="File\Auxiliary\全国河流水文站坐标.xls" />
     <Content Include="File\data\hh_past\2000.txt" />
