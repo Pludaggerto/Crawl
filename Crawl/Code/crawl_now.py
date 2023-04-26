@@ -153,25 +153,25 @@ class NowCrawler(Baser):
         self.create_single_file(fileName_cjhb  , ["日期", "站点编号", "河名", "站名", "水位", "水势", "流量", "比昨日涨落", 
                                             "设防水位", "警戒水位", "警戒水位", "MAXZ"])
         self.create_single_file(fileName_cjll  , ["时间", "站名", "具体时间", "水位", "流量", "涨落"])
-        self.create_single_file(fileName_qghl  , ["流域", "编号", "行政区", "河名", "站名", "时间", "水位(米)", "流量(米3/秒)", "警戒水位(米)"])
-        self.create_single_file(fileName_hbzy  , ["日期", "市（洲）", "编号", "站名", "站类", "水位", "流量", "昨日涨落"])
+        self.create_single_file(fileName_qghl  , ["流域", "站点编号", "行政区", "河名", "站名", "时间", "水位(米)", "流量(米3/秒)", "警戒水位(米)"])
+        self.create_single_file(fileName_hbzy  , ["日期", "市（洲）", "站点编号", "站名", "站类", "水位", "流量", "昨日涨落"])
         self.create_single_file(fileName_gdxqR , ["日期", "市", "市(县)", "站名", "时间", "水位", "警戒水位", "水势"])
         self.create_single_file(fileName_gdxqL , ["日期", "市", "市(县)", "站名", "时间", "水位", "汛限水位"])
         self.create_single_file(fileName_jxzd  , ["日期", "站名", "时间", "水位(m)", "流量(m³/s)", "超警戒(m)", "站点编号"])
-        self.create_single_file(fileName_qgdx  , ["damel", "时间", "省", "流域", "河名", "库水位(米)", "编号", "站名","蓄水量(百万3)", "入库(米3/秒)"])
+        self.create_single_file(fileName_qgdx  , ["damel", "时间", "省", "流域", "河名", "库水位(米)", "站点编号", "站名","蓄水量(百万3)", "入库(米3/秒)"])
         self.create_single_file(fileName_hngzR , ["时间", "水位", "流量", "WPTN", "警戒水位", "OBHTZ", "OBHTZTM", "比警戒", "HIS", "ADDVCD",
                                             "市", "ATCUNIT", "BGFRYM", "主流", "基本站", "DRNA", "DSTRVM", "DTMEL", "基准面", "DTPR", 
-                                            "ESSTYM", "FRGRD", "支流", "LGTD", "LOCALITY", "LTTD", "MODITIME", "PHCD", "河流", "STAZT", 
-                                            "STBK",'STCD', "站点编号", "站点位置","站名" "站点类型", "USFL", "HN_NUM"])
+                                            "ESSTYM", "FRGRD", "支流", "LGTD", "LOCALITY", "LTTD", "MODITIME", "PHCD", "河名", "STAZT", 
+                                            "STBK",'STCD', "站点编号", "站点位置", "站名", "站点类型", "USFL", "HN_NUM"])
         self.create_single_file(fileName_hngzL, ["时间", "水位", "W", "RWPTN", "入库", "出库", "RSVRTP", 
                                            "HHRZ", "HHRZTM", "汛限水位", "比讯限", "ADDVCD" "站名", "DRNA", "FRGRD", 'HNNM', 'LGTD', 
                                            "LTTD", "河流", "站点编号", "站点位置", "站名", "STTP", "HN_NUM"])
-        self.create_single_file(fileName_thly, ["lat","lon","站点编号", "时间", "站名", "zr", "ymdh",'dyrn', 'z', 
-                                          '保证水位', 'dwz', '河流', 'avq', 'hnnm', 'w', 'detaz', 'unitname', 'damel', 
+        self.create_single_file(fileName_thly, ["LGTD","LTTD","站点编号", "时间", "站名", "zr", "ymdh",'dyrn', 'z', 
+                                          '保证水位', 'dwz', '河名', 'avq', 'hnnm', 'w', 'detaz', 'unitname', 'damel', 
                                           'iymdh', 'fymdh', 'q', '警戒水位', 'sttp', 'obhtztm', 'frgrd', 'obhtz'])
         self.create_single_file(fileName_nbslR, ["日期", "站名", "水位", "保证", "涨落"])
-        self.create_single_file(fileName_nbslL, ["日期", "站名", "水位八点", "库容八点", "水位八点", "库容八点","水位控制", "库容控制", "控制百分比"])
-        self.create_single_file(fileName_ahsx, ["日期", "河名", "站名", "时间", "水位", "所属项目", "站号"])
+        self.create_single_file(fileName_nbslL, ["日期", "站名", "水位八点", "库容八点","水位实时", "库容实时", "水位控制", "库容控制", "控制百分比"])
+        self.create_single_file(fileName_ahsx, ["日期", "河名", "站名", "时间", "水位", "所属项目", "站点编号"])
 
     def crawl_hh(self):
         try:
@@ -699,7 +699,6 @@ class NowCrawler(Baser):
                             row.append(td.string)
                         writer.writerow(row)     
             f.close()      
-            logging.info("[INFO]crawling nbslR...")
         except:
             logging.error("[ERROR]crawling nbslL error...")
         return 
@@ -722,7 +721,7 @@ class NowCrawler(Baser):
 
             html = browser.page_source
             soup = BeautifulSoup(html, 'html.parser')
-            fileName = os.path.join(self.workspace, self.nowDate.split("-")[0] + "_nbsL.txt")
+            fileName = os.path.join(self.workspace, self.nowDate.split("-")[0] + "zjsq.txt")
             f = open(fileName, 'a+', newline="", encoding='utf-8')
             writer = csv.writer(f)
             tbody = soup.find("#table1 > div > div > div > div > div > div.ant-table-body > table")[0].tbody
@@ -757,9 +756,9 @@ def main():
     log.addHandler(handler)
     log.setLevel(logging.ERROR)
 
-    workspace = r"C:\Users\lwx\Desktop\FOR"
-
-    nowCrawler = NowCrawler(workspace)
+    workspace  = os.path.dirname(os.path.abspath(os.path.dirname(__file__)))
+    dataFolder = os.path.join(workspace, "File\data\\now")
+    nowCrawler = NowCrawler(dataFolder)
     nowCrawler.run_all()
 
 if __name__ == '__main__':

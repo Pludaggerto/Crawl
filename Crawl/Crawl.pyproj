@@ -4,14 +4,14 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>4618b47a-9398-4e03-b5f1-3714791d0394</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>Code\crawl_now.py</StartupFile>
+    <StartupFile>Code\Filterer.py</StartupFile>
     <SearchPath>Baser</SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
     <OutputPath>.</OutputPath>
     <Name>Crawl</Name>
     <RootNamespace>Crawl</RootNamespace>
     <TestFramework>Pytest</TestFramework>
-    <InterpreterId>Global|VisualStudio|geos</InterpreterId>
+    <InterpreterId>CondaEnv|CondaEnv|geos</InterpreterId>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <DebugSymbols>true</DebugSymbols>
@@ -25,26 +25,80 @@
     <Compile Include="Baser\Baser.py" />
     <Compile Include="Code\count.py" />
     <Compile Include="Code\crawl_now.py" />
+    <Compile Include="Code\Filterer.py" />
     <Compile Include="Code\history\Crawl_past.py" />
     <Compile Include="Code\history\crawl_schd.py" />
     <Compile Include="Code\history\Post_cjhb.py" />
     <Compile Include="Code\history\Post_hh.py" />
     <Compile Include="Code\history\Writebat.py" />
     <Compile Include="Code\history\Crawl_hh.py" />
+    <Compile Include="data\now\crawl_now.py" />
     <Compile Include="test\test.py" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Code\history\" />
+    <Folder Include="data\" />
+    <Folder Include="data\hh\" />
+    <Folder Include="data\now\" />
     <Folder Include="File\" />
     <Folder Include="File\Auxiliary\" />
     <Folder Include="File\Auxiliary\hh\" />
-    <Folder Include="File\data\" />
     <Folder Include="Code\" />
     <Folder Include="Baser\" />
-    <Folder Include="File\data\hh_past\" />
     <Folder Include="test\" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="data\hh\2000.txt" />
+    <Content Include="data\hh\2001.txt" />
+    <Content Include="data\hh\2002.txt" />
+    <Content Include="data\hh\2003.txt" />
+    <Content Include="data\hh\2004.txt" />
+    <Content Include="data\hh\2005.txt" />
+    <Content Include="data\hh\2006.txt" />
+    <Content Include="data\hh\2007.txt" />
+    <Content Include="data\hh\2008.txt" />
+    <Content Include="data\hh\2009.txt" />
+    <Content Include="data\hh\2010.txt" />
+    <Content Include="data\hh\2011.txt" />
+    <Content Include="data\hh\2012.txt" />
+    <Content Include="data\hh\2013.txt" />
+    <Content Include="data\hh\2014.txt" />
+    <Content Include="data\hh\2015.txt" />
+    <Content Include="data\hh\2016.txt" />
+    <Content Include="data\hh\2017.txt" />
+    <Content Include="data\hh\2018.txt" />
+    <Content Include="data\hh\2019.txt" />
+    <Content Include="data\hh\2020.txt" />
+    <Content Include="data\hh\2021.txt" />
+    <Content Include="data\hh\2022.txt" />
+    <Content Include="data\hh\merge.txt" />
+    <Content Include="data\now\20230323.rar" />
+    <Content Include="data\now\20230411.rar" />
+    <Content Include="data\now\20230412.rar" />
+    <Content Include="data\now\20230418.rar" />
+    <Content Include="data\now\20230421.rar" />
+    <Content Include="data\now\20230426.rar" />
+    <Content Include="data\now\2023_ahsx.txt" />
+    <Content Include="data\now\2023_cjhb.txt" />
+    <Content Include="data\now\2023_cjll.txt" />
+    <Content Include="data\now\2023_gdxqL.txt" />
+    <Content Include="data\now\2023_gdxqR.txt" />
+    <Content Include="data\now\2023_hbzy.txt" />
+    <Content Include="data\now\2023_hh.txt" />
+    <Content Include="data\now\2023_hngzL.txt" />
+    <Content Include="data\now\2023_hngzR.txt" />
+    <Content Include="data\now\2023_jxzd.txt" />
+    <Content Include="data\now\2023_nbsl.txt" />
+    <Content Include="data\now\2023_nbslL.txt" />
+    <Content Include="data\now\2023_nbslR.txt" />
+    <Content Include="data\now\2023_nbsR.txt" />
+    <Content Include="data\now\2023_qgdx.txt" />
+    <Content Include="data\now\2023_qghl.txt" />
+    <Content Include="data\now\2023_schd.txt" />
+    <Content Include="data\now\2023_thly.txt" />
+    <Content Include="data\now\2023_zj_re.txt" />
+    <Content Include="data\now\2023_zj_ri.txt" />
+    <Content Include="data\now\Water_station.rar" />
     <Content Include="File\Auxiliary\hh\hh_Station.cpg" />
     <Content Include="File\Auxiliary\hh\hh_Station.dbf" />
     <Content Include="File\Auxiliary\hh\hh_Station.sbn" />
@@ -66,30 +120,6 @@
     <Content Include="File\Auxiliary\zj2.json" />
     <Content Include="File\Auxiliary\zjsq.json" />
     <Content Include="File\Auxiliary\全国河流水文站坐标.xls" />
-    <Content Include="File\data\hh_past\2000.txt" />
-    <Content Include="File\data\hh_past\2001.txt" />
-    <Content Include="File\data\hh_past\2002.txt" />
-    <Content Include="File\data\hh_past\2003.txt" />
-    <Content Include="File\data\hh_past\2004.txt" />
-    <Content Include="File\data\hh_past\2005.txt" />
-    <Content Include="File\data\hh_past\2006.txt" />
-    <Content Include="File\data\hh_past\2007.txt" />
-    <Content Include="File\data\hh_past\2008.txt" />
-    <Content Include="File\data\hh_past\2009.txt" />
-    <Content Include="File\data\hh_past\2010.txt" />
-    <Content Include="File\data\hh_past\2011.txt" />
-    <Content Include="File\data\hh_past\2012.txt" />
-    <Content Include="File\data\hh_past\2013.txt" />
-    <Content Include="File\data\hh_past\2014.txt" />
-    <Content Include="File\data\hh_past\2015.txt" />
-    <Content Include="File\data\hh_past\2016.txt" />
-    <Content Include="File\data\hh_past\2017.txt" />
-    <Content Include="File\data\hh_past\2018.txt" />
-    <Content Include="File\data\hh_past\2019.txt" />
-    <Content Include="File\data\hh_past\2020.txt" />
-    <Content Include="File\data\hh_past\2021.txt" />
-    <Content Include="File\data\hh_past\2022.txt" />
-    <Content Include="File\data\hh_past\merge.txt" />
     <Content Include="note.md" />
     <Content Include="station.md" />
   </ItemGroup>
