@@ -18,6 +18,8 @@ from tqdm import trange
 import json
 import pandas as pd
 import undetected_chromedriver as uc
+import zipfile
+import glob
 
 class Baser(object):
 
@@ -63,7 +65,7 @@ class NowCrawler(Baser):
         logging.info("[INFO]crawling now...")
         super().__init__()
 
-        self.url_hh    = 'http://61.163.88.227:8006/hwsq.aspx?sr=0nkRxv6s9CTRMlwRgmfFF6jTpJPtAv87'
+        self.url_hhsw  = 'http://61.163.88.227:8006/hwsq.aspx?sr=0nkRxv6s9CTRMlwRgmfFF6jTpJPtAv87'
         self.url_zj    = "http://www.pearlwater.gov.cn/sssq/"
         self.url_cjhb  = "http://113.57.190.228:8001/Web/Report/"
         self.url_cjll  = "http://www.cjh.com.cn/sssqcwww.html"
@@ -129,9 +131,9 @@ class NowCrawler(Baser):
 
     def create_file(self):
         
-        fileName_hh     = self.get_file_name("hh")
-        fileName_zj_re  = self.get_file_name("zj_re") # reservoir
-        fileName_zj_ri  = self.get_file_name("zj_ri")
+        fileName_hhsw   = self.get_file_name("hhsw")
+        fileName_zjre   = self.get_file_name("zjre") # reservoir
+        fileName_zjri   = self.get_file_name("zjri")
         fileName_cjhb   = self.get_file_name("cjhb")
         fileName_cjll   = self.get_file_name("cjll")
         fileName_qghl   = self.get_file_name("qghl")
@@ -145,11 +147,11 @@ class NowCrawler(Baser):
         fileName_thly   = self.get_file_name("thly")
         fileName_nbslR  = self.get_file_name("nbslR") # river
         fileName_nbslL  = self.get_file_name("nbslL") # reservoir
-        fileName_ahsx  = self.get_file_name("ahsx")
+        fileName_ahsx   = self.get_file_name("ahsx")
 
-        self.create_single_file(fileName_hh    , ["日期", "河名", "站名", "水位", "流量", "含沙量"])
-        self.create_single_file(fileName_zj_re , ["时间", "站名", "水位", "出库", "入库", "库容"])
-        self.create_single_file(fileName_zj_ri , ["时间", "站名", "水位", "流量"])
+        self.create_single_file(fileName_hhsw  , ["日期", "河名", "站名", "水位", "流量", "含沙量"])
+        self.create_single_file(fileName_zjre , ["日期", "站名", "时间", "水位", "出库", "入库", "库容"])
+        self.create_single_file(fileName_zjri , ["日期", "站名", "时间", "水位", "流量"])
         self.create_single_file(fileName_cjhb  , ["日期", "站点编号", "河名", "站名", "水位", "水势", "流量", "比昨日涨落", 
                                             "设防水位", "警戒水位", "警戒水位", "MAXZ"])
         self.create_single_file(fileName_cjll  , ["时间", "站名", "具体时间", "水位", "流量", "涨落"])
@@ -162,7 +164,7 @@ class NowCrawler(Baser):
         self.create_single_file(fileName_hngzR , ["时间", "水位", "流量", "WPTN", "警戒水位", "OBHTZ", "OBHTZTM", "比警戒", "HIS", "ADDVCD",
                                             "市", "ATCUNIT", "BGFRYM", "主流", "基本站", "DRNA", "DSTRVM", "DTMEL", "基准面", "DTPR", 
                                             "ESSTYM", "FRGRD", "支流", "LGTD", "LOCALITY", "LTTD", "MODITIME", "PHCD", "河名", "STAZT", 
-                                            "STBK",'STCD', "站点编号", "站点位置", "站名", "站点类型", "USFL", "HN_NUM"])
+                                            "STBK", "站点编号", "站点位置", "站名", "站点类型", "USFL", "HN_NUM"])
         self.create_single_file(fileName_hngzL, ["时间", "水位", "W", "RWPTN", "入库", "出库", "RSVRTP", 
                                            "HHRZ", "HHRZTM", "汛限水位", "比讯限", "ADDVCD" "站名", "DRNA", "FRGRD", 'HNNM', 'LGTD', 
                                            "LTTD", "河流", "站点编号", "站点位置", "站名", "STTP", "HN_NUM"])
@@ -171,16 +173,16 @@ class NowCrawler(Baser):
                                           'iymdh', 'fymdh', 'q', '警戒水位', 'sttp', 'obhtztm', 'frgrd', 'obhtz'])
         self.create_single_file(fileName_nbslR, ["日期", "站名", "水位", "保证", "涨落"])
         self.create_single_file(fileName_nbslL, ["日期", "站名", "水位八点", "库容八点","水位实时", "库容实时", "水位控制", "库容控制", "控制百分比"])
-        self.create_single_file(fileName_ahsx, ["日期", "河名", "站名", "时间", "水位", "所属项目", "站点编号"])
+        # self.create_single_file(fileName_ahsx, ["日期", "河名", "站名", "时间", "水位", "所属项目", "站点编号"])
 
-    def crawl_hh(self):
+    def crawl_hhsw(self):
         try:
-            logging.info("[INFO]crawling hh...")
+            logging.info("[INFO]crawling hhsw...")
             chrome_options = Options()
             chrome_options.add_argument('--headless')
             chrome_options.add_argument('--disable-gpu')
             browser = webdriver.Chrome(options=chrome_options)
-            browser.get(self.url_hh)
+            browser.get(self.url_hhsw)
             js='document.getElementById("ContentLeft_menuDate1_TextBox11").removeAttribute("readonly");'
             browser.execute_script(js)
             browser.find_element(By.ID,'ContentLeft_menuDate1_TextBox11').clear()
@@ -191,7 +193,7 @@ class NowCrawler(Baser):
             soup=BeautifulSoup(html,'html.parser')
             data=soup.find_all('table','mainTxt')
 
-            filename = os.path.join(self.workspace, self.nowDate.split("-")[0]  + "_hh.txt")
+            filename = os.path.join(self.workspace, self.nowDate.split("-")[0]  + "_hhsw.txt")
 
             f = open(filename, 'a+', newline="", encoding='utf-8')
             writer = csv.writer(f)
@@ -199,12 +201,20 @@ class NowCrawler(Baser):
                 if isinstance(tr,bs4.element.Tag):
                     tds=tr('td')
                     if(tds[0].string != "河名"):
-                        writer.writerow([self.nowDate,tds[0].string,tds[1].string,tds[2].string,tds[3].string,tds[4].string])
+                        writer.writerow([self.nowDate,tds[0].string.replace(" ", ""),
+                                         tds[1].string.replace(" ", ""),
+                                         tds[2].string.replace(" ", ""),
+                                         tds[3].string.replace(" ", ""),
+                                         tds[4].string.replace(" ", "")])
             for tr in data[2]('tbody')[0].children:
                 if isinstance(tr,bs4.element.Tag):
                     tds=tr('td')
                     if(tds[0].string != "河名"):
-                        writer.writerow([self.nowDate,tds[0].string,tds[1].string,tds[2].string,tds[3].string,tds[4].string])
+                        writer.writerow([self.nowDate,tds[0].string.replace(" ", ""),
+                                         tds[1].string.replace(" ", ""),
+                                         tds[2].string.replace(" ", ""),
+                                         tds[3].string.replace(" ", ""),
+                                         tds[4].string.replace(" ", "")])
             f.close()
             logging.info("[INFO]crawling hh finish...")
         except:
@@ -221,15 +231,15 @@ class NowCrawler(Baser):
             browser = uc.Chrome(options=options)
             time.sleep(random() * 2)
             browser.get(self.url_zj)
-            time.sleep(random() * 2)
+            time.sleep(random() * 10)
             html = browser.page_source
             soup = BeautifulSoup(html, 'html.parser')
-            browser.save_screenshot(r'C:\Users\lwx\Desktop\test\datadome_undetected_webddriver.png')
+            #browser.save_screenshot(r'C:\Users\lwx\Desktop\test\datadome_undetected_webddriver.png')
             tables = soup.select(".table-wrapper")
             table_reservoir = tables[0]
             table_river = tables[1]
 
-            fileName = os.path.join(self.workspace, self.nowDate.split("-")[0] + "_zj_re.txt")
+            fileName = os.path.join(self.workspace, self.nowDate.split("-")[0] + "_zjre.txt")
             f = open(fileName, 'a+', newline="", encoding='utf-8')
             writer = csv.writer(f)
             for tr in table_reservoir("tbody")[0].children:
@@ -241,7 +251,7 @@ class NowCrawler(Baser):
                     writer.writerow(row)
             f.close()
 
-            fileName = os.path.join(self.workspace, self.nowDate.split("-")[0] + "_zj_ri.txt")
+            fileName = os.path.join(self.workspace, self.nowDate.split("-")[0] + "_zjri.txt")
             f = open(fileName, 'a+', newline="", encoding='utf-8')
             writer = csv.writer(f)
             for tr in table_river("tbody")[0].children:
@@ -646,13 +656,13 @@ class NowCrawler(Baser):
         try:
             logging.info("[INFO]crawling nbslR...")
             time.sleep(0.5)    
-            options = uc.ChromeOptions()
-            options.headless=True
-            options.add_argument('--headless')
-            browser = uc.Chrome(options=options)
-            time.sleep(random() * 2)
+            chrome_options = Options()
+            chrome_options.add_argument('--headless')
+            chrome_options.add_argument('--disable-gpu')
+            browser = webdriver.Chrome(options=chrome_options)
+            time.sleep(random())
             browser.get(self.url_nbslR)
-            time.sleep(random() * 2)
+            time.sleep(10 + random() * 5)
             html = browser.page_source
             soup = BeautifulSoup(html, 'html.parser')
 
@@ -677,13 +687,13 @@ class NowCrawler(Baser):
         try:
             logging.info("[INFO]crawling nbslL...")
             time.sleep(0.5)    
-            options = uc.ChromeOptions()
-            options.headless=True
-            options.add_argument('--headless')
-            browser = uc.Chrome(options=options)
+            chrome_options = Options()
+            chrome_options.add_argument('--headless')
+            chrome_options.add_argument('--disable-gpu')
+            browser = webdriver.Chrome(options=chrome_options)
             time.sleep(random() * 2)
             browser.get(self.url_nbslL)
-            time.sleep(random() * 2)
+            time.sleep(10 + random() * 5)
             html = browser.page_source
             soup = BeautifulSoup(html, 'html.parser')
             fileName = os.path.join(self.workspace, self.nowDate.split("-")[0] + "_nbslL.txt")
@@ -725,8 +735,18 @@ class NowCrawler(Baser):
             f = open(fileName, 'a+', newline="", encoding='utf-8')
             writer = csv.writer(f)
             tbody = soup.find("#table1 > div > div > div > div > div > div.ant-table-body > table")[0].tbody
+
         except:
+
             logging.error("[ERROR]crawling zjsq error")
+
+    def zip_file(self):
+
+        zip_file = zipfile.ZipFile(os.path.join(self.workspace, self.nowDate + ".zip"),'w')
+        for fileName in glob.glob(os.path.join(self.workspace, "*.txt")):
+            zip_file.write(fileName, fileName.split("\\")[-1])
+
+        zip_file.close()
        
     def run_all(self):
         logging.info("[INFO]crawl all...")
@@ -744,9 +764,9 @@ class NowCrawler(Baser):
         self.crawl_cjll()        # 长江流域重要站实时水情表
         self.crawl_cjhb()        # 湖北省常用水情报表
         self.crawl_hbzy()        # 湖北省内主要流域河道站实时水情
-        self.crawl_hh()          # 黄河水文站
+        self.crawl_hhsw()        # 黄河水文站
         self.crawl_zj()          # 珠江流域主要水库最新水情信息
-       
+        self.zip_file()
         logging.info("[INFO]finish crawl all...")
 
 def main():
@@ -754,10 +774,15 @@ def main():
     log = logging.getLogger()
     handler = logging.StreamHandler()
     log.addHandler(handler)
-    log.setLevel(logging.ERROR)
+    log.setLevel(logging.ERROR) 
 
     workspace  = os.path.dirname(os.path.abspath(os.path.dirname(__file__)))
-    dataFolder = os.path.join(workspace, "File\data\\now")
+    dataFolder = os.path.join(workspace, "File\\data\\now")
+
+    fh = logging.FileHandler(os.path.join(dataFolder, "Crawl.log"))
+    fh.setLevel(logging.ERROR)
+    log.addHandler(fh)
+
     nowCrawler = NowCrawler(dataFolder)
     nowCrawler.run_all()
 

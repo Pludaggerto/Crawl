@@ -14,10 +14,12 @@ class Filterer(object):
         logging.info("[INFO]Filtering begin...")
 
         self.workspace = workspace
-        self.dataFolder = os.path.join(workspace, "data")
+
+        self.dataFolder      = os.path.join(workspace, "File\\data")
+        self.resultFolder    = os.path.join(workspace, "File\\result")
         self.auxiliaryFolder = os.path.join(workspace, "File\\Auxiliary")
         
-        self.stationFile = os.path.join(workspace, "File\\Auxiliary\\全国河流水文站坐标.xlsx")
+        self.stationFile = os.path.join(workspace, "Auxiliary\\全国河流水文站坐标.xlsx")
 
         self.recordFiles     = []
         self.stationLocation = []
@@ -34,10 +36,13 @@ class Filterer(object):
                 self.recordFiles.append(fileName)
 
     def filter_station(self):
+
         # ["站名", "站点编号", "河名", "经度", "纬度"]
         stationJsons = glob.glob(os.path.join(self.auxiliaryFolder, "*.json"))
         stationJsonPart = []
         for stationJson in stationJsons:
+            if "station.json" in stationJson:
+                break
             # from json File
             with open(stationJson, 'r', encoding = "UTF-8") as jsonFile:
                 jsonText = jsonFile.read()
@@ -114,19 +119,120 @@ class Filterer(object):
                 df = df[["站名", "站点编号", "河名", "经度", "纬度"]]
                 self.stationLocation = pd.concat([df, self.stationLocation], axis=0, ignore_index=True)
         self.stationLocation.columns = ["stnm", "stcd", "rvnm", "lon", "lat"]
-        gpd.GeoDataFrame(self.stationLocation, geometry=gpd.points_from_xy(self.stationLocation["lon"], self.stationLocation["lat"])).to_file(os.path.join(self.auxiliaryFolder, "station.json"), driver="GeoJSON")
+        self.stationLocation.drop_duplicates(["stnm"], inplace = True)
+       
+        riverFiles = ["zjri", "gdxqR", "hngzR", "nbslR", "cjll", "qghl", "jxzd"]
+        lakeFiles = ["zjre", "nbslL", "hngzL", "gdxqL", "qgdx"]
+        mixFiles = ["hhsw", "cjhb", "hbzy"]
+
+        river_name = []
+        lake_name = []
+        for fileName in self.recordFiles:
+
+            df = pd.read_csv(fileName)
+            df_drop = df.drop_duplicates(subset = ["站名"])
+
+            for riverFile in riverFiles:
+
+                if riverFile in fileName:
+                    river_name = list(df_drop["站名"]) + river_name
+
+            for lakeFile in lakeFiles:
+
+                if lakeFile in fileName:
+                    lake_name  = list(df_drop["站名"]) + lake_name
+
+            if "hhsw" in fileName:
+                for name in df_drop["站名"]:
+                    if "入库" in name or "蓄水量" in name or "出库" in name:
+                        lake_name.append(name.replace("入库","").replace("蓄水量","").replace("出库",""))
+                    else:
+                        river_name.append(name)
+
+            if "cjhb" in fileName:
+
+                # modification: judge all instead of one
+                index = pd.isna(df_drop["流量"]) + pd.Series(["入" in str(i) for i in list(df_drop["流量"])])
+                lake_name  = lake_name  + list(df_drop[index]["站名"])
+                river_name = river_name + list(df_drop[~index]["站名"])
+
+            if "hbzy" in fileName:
+                
+                lake_name  = lake_name  + list(df_drop[df_drop["站类"] == "ZZ"]["站名"])
+                river_name = river_name + list(df_drop[df_drop["站类"] == "ZQ"]["站名"])
+
+        # before Station
+        beforeDf = pd.read_csv(os.path.join(self.auxiliaryFolder, "Stationbefore.txt"))
+        beforeDf["stcd"] = len(beforeDf) * [""]
+        beforeDf = beforeDf[['river',"stcd", 'name', 'lat', 'lon']]
+        beforeDf.columns = ["stnm", "stcd", "rvnm", "lat", "lon"] 
+        self.stationLocation = pd.concat([beforeDf, self.stationLocation], axis=0, ignore_index=True)
+
+        lakeDf = pd.DataFrame([lake_name , [0] * len(lake_name)]).transpose()
+        lakeDf.columns = ["stnm", "type"]
+        lakeDf.drop_duplicates(["stnm"], inplace = True)
+        riverDf = pd.DataFrame([river_name, [1] * len(river_name)]).transpose()
+        riverDf.columns = ["stnm", "type"]
+        riverDf.drop_duplicates(["stnm"], inplace = True)
+        typeDf = pd.concat([lakeDf, riverDf])
+        gdf = gpd.GeoDataFrame(self.stationLocation, 
+                               geometry=gpd.points_from_xy(self.stationLocation["lon"], 
+                                                           self.stationLocation["lat"]))
+        result = pd.merge(gdf, typeDf, how = "left")
+
+
+        result.to_file(os.path.join(self.auxiliaryFolder, "station.json"), driver="GeoJSON")
+        result.to_file(os.path.join(self.auxiliaryFolder, "station.shp"))                                                                                       
+
+    def get_seperate_series(self, drop_duplicated = True):
+        stationCount = {}
+        repeatedName = {}
+        repeatedFile = []
+        for fileName in self.recordFiles:
+            stationDf = pd.read_csv(fileName)
+            stationDf_drop = stationDf.drop_duplicates(["站名"])
+            nameList = list(stationDf_drop["站名"])
+
+            for name in nameList:
+
+                if type(name) == str:
+                    tempDf = stationDf[stationDf["站名"] == name]
+                    outFile = os.path.join(self.resultFolder, name.replace("*","") + ".txt")
+                    if name == "七里街":
+
+                        e = 2
+                    if not name in list(repeatedName.keys()):
+                        repeatedName[name] = 1
+                        if os.path.exists(outFile):
+                            tempDf.to_csv(outFile, mode = "a+", header = False, index = False)
+                        else:
+                            tempDf.to_csv(outFile, mode = "w+", index = False)
+                    else:               
+                        repeatedName[name] = repeatedName[name] + 1
+                        tempDf.to_csv(outFile[:-4] + "_" + str(repeatedName[name]) + ".txt", mode = "w+", index = False)
+
         
-        return None
+        for File in glob.glob(os.path.join(self.resultFolder, "*.txt")):
+            stationDf = pd.read_csv(File)
+            if drop_duplicated:
+                stationDf.drop_duplicates(inplace = True)
+            stationDf.to_csv(File, mode = "w+", index = False)
+            stationCount[File.split("\\")[-1][:-4]] = len(stationDf)
 
-    def filter_lake(self):
-        for File in  
+        df = pd.DataFrame([stationCount.keys(), [float(i) for i in stationCount.values()]]).transpose()
+        df.columns = ["stnm", "count"] 
+        df.to_csv(os.path.join(self.resultFolder, "StationRecordCounts.txt"), index = False)
 
-    def filter_river(self):
-        pass
+        gdf = gpd.read_file(os.path.join(self.auxiliaryFolder, "station.json"))
+        gdf = pd.merge(gdf, df, on = "stnm", how = "left")
+        gdf.to_file(os.path.join(self.auxiliaryFolder, "station.json"))
+        gdf.to_file(os.path.join(self.auxiliaryFolder, "station.shp"))
+        return 
 
     def run_all(self):
         self.select_files(self.dataFolder)
         self.filter_station()
+        self.get_seperate_series()
         pass
 
 def main():

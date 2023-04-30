@@ -89,7 +89,7 @@ class CrawlerSCHD(Baser):
         return None
 
     def crawl(self):
-       #  browser.find_element(By.XPATH, '//*[@id="app"]/div/div[2]/div[2]/div[2]/div/div/div/button[2]/span').click()  
+        #  browser.find_element(By.XPATH, '//*[@id="app"]/div/div[2]/div[2]/div[2]/div/div/div/button[2]/span').click()  
         chrome_options = Options()
         # chrome_options.add_argument('--headless')
         chrome_options.add_argument('--disable-gpu')
