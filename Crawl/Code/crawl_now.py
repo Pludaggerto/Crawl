@@ -218,7 +218,7 @@ class NowCrawler(Baser):
             f.close()
             logging.info("[INFO]crawling hh finish...")
         except:
-            logging.error("[ERROR]crawling hh error...")
+            logging.error(self.nowDate + " [ERROR]crawling hh error...")
             
     
     def crawl_zj(self):         
@@ -264,7 +264,7 @@ class NowCrawler(Baser):
             f.close()
             logging.info("[INFO]finish crawling zj...")
         except:
-            logging.info("[INFO] error zj...")
+            logging.error(self.nowDate + " [ERROR] error zj...")
 
 
     def crawl_cjhb(self):
@@ -297,7 +297,7 @@ class NowCrawler(Baser):
                         header = False, mode = "a+")
             logging.info("[INFO]finish crawling cjhb...")
         except:
-            logging.error("[ERROR]crawling cjhb error...")
+            logging.error(self.nowDate + " [ERROR]crawling cjhb error...")
 
     def crawl_cjll(self):
         try:
@@ -326,7 +326,7 @@ class NowCrawler(Baser):
             f.close()
             logging.info("[INFO]finish crawling cjll...")
         except:
-            logging.error("[ERROR]crawling cjll error...")
+            logging.error(self.nowDate + " [ERROR]crawling cjll error...")
 
     def crawl_qghl(self):
         try:
@@ -365,7 +365,7 @@ class NowCrawler(Baser):
                             header = False, mode = "a+")
                 logging.info("[INFO]finish crawling qghl...")
         except:
-            logging.error("[ERROR]crawling qghl error...")
+            logging.error(self.nowDate + " [ERROR]crawling qghl error...")
         
         return None
 
@@ -410,7 +410,7 @@ class NowCrawler(Baser):
                         header = False, mode = "a+")
             logging.info("[INFO]finish crawling hbzy...")
         except:
-            logging.error("[ERROR]crawling hbzy error...")
+            logging.error(self.nowDate + " [ERROR]crawling hbzy error...")
 
     def crawl_gdxq(self):
         try: 
@@ -466,7 +466,7 @@ class NowCrawler(Baser):
             f.close()
             logging.info("[INFO]crawling gdxq end...")
         except:
-            logging.error("[ERROR]crawling gdxq error...")
+            logging.error(self.nowDate + " [ERROR]crawling gdxq error...")
         return None
 
     def crawl_jxzd(self):
@@ -503,7 +503,7 @@ class NowCrawler(Baser):
             f.close()
             logging.info("[INFO]finish crawling jxzd...")
         except:
-            logging.eeror("[ERROR]crawling jxzd error...")
+            logging.error(self.nowDate + " [ERROR]crawling jxzd error...")
 
     def crawl_qgdx(self):
         try:
@@ -548,7 +548,7 @@ class NowCrawler(Baser):
 
                 return None
         except:
-            logging.error("[ERROR]crawling qgdx error...")
+            logging.error(self.nowDate + " [ERROR]crawling qgdx error...")
 
     def crawl_hngz(self):
         try:
@@ -619,7 +619,7 @@ class NowCrawler(Baser):
             df.to_csv(fileName, index = False,
                         header = False, mode = "a+")
         except:
-            logging.info("[ERROR]crawling hngz error...")
+            logging.error(self.nowDate + " [ERROR]crawling hngz error...")
 
     def crawl_thly(self):
         try:
@@ -650,7 +650,7 @@ class NowCrawler(Baser):
             df.to_csv(fileName, index = False,
                         header = False, mode = "a+")
         except:
-            logging.info("[ERROR]crawling thly error...")
+            logging.error(self.nowDate + " [ERROR]crawling thly error...")
 
     def crawl_nbslR(self):
         try:
@@ -681,7 +681,7 @@ class NowCrawler(Baser):
             f.close()   
             logging.info("[INFO]finish crawling nbslL...")
         except:
-            logging.error("[ERROR]crawling nbslR error...")
+            logging.error(self.nowDate + " [ERROR]crawling nbslR error...")
 
     def crawl_nbslL(self):
         try:
@@ -710,7 +710,7 @@ class NowCrawler(Baser):
                         writer.writerow(row)     
             f.close()      
         except:
-            logging.error("[ERROR]crawling nbslL error...")
+            logging.error(self.nowDate + " [ERROR]crawling nbslL error...")
         return 
 
     def crawl_zjsq(self):
@@ -738,7 +738,7 @@ class NowCrawler(Baser):
 
         except:
 
-            logging.error("[ERROR]crawling zjsq error")
+            logging.error(self.nowDate + " [ERROR]crawling zjsq error")
 
     def zip_file(self):
 
