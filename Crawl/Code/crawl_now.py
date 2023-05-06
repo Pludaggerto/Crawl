@@ -1,25 +1,26 @@
-﻿from distutils.sysconfig import get_makefile_filename
-import logging
-from random import random
-import requests
-from bs4 import BeautifulSoup
-from selenium import webdriver
-from selenium.webdriver.chrome.options import Options
-from selenium import webdriver
-from time import sleep
-from selenium.webdriver.common.by import By
-import bs4
+﻿import bs4
 import csv
 import datetime
 import time
 import os
-import argparse
-from tqdm import trange
+import requests
 import json
-import pandas as pd
-import undetected_chromedriver as uc
 import zipfile
 import glob
+import logging
+
+import pandas                          as pd
+import undetected_chromedriver         as uc
+
+from distutils.sysconfig               import get_makefile_filename
+from random                            import random
+from bs4                               import BeautifulSoup
+from selenium                          import webdriver
+from selenium.webdriver.chrome.options import Options
+from selenium                          import webdriver
+from time                              import sleep
+from selenium.webdriver.common.by      import By
+from tqdm                              import trange
 
 class Baser(object):
 
@@ -229,13 +230,17 @@ class NowCrawler(Baser):
             options.headless=True
             options.add_argument('--headless')
             browser = uc.Chrome(options=options)
-            time.sleep(random() * 2)
+            time.sleep(random() * 3)
             browser.get(self.url_zj)
             time.sleep(random() * 10)
             html = browser.page_source
             soup = BeautifulSoup(html, 'html.parser')
-            #browser.save_screenshot(r'C:\Users\lwx\Desktop\test\datadome_undetected_webddriver.png')
+            browser.save_screenshot(r'C:\Users\lwx\Desktop\test\datadome_undetected_webddriver' + self.nowDate + ".png")
             tables = soup.select(".table-wrapper")
+            if tables == []:
+                browser.get(self.url_zj)
+                time.sleep(random() * 20)
+                tables = soup.select(".table-wrapper")
             table_reservoir = tables[0]
             table_river = tables[1]
 
@@ -752,6 +757,7 @@ class NowCrawler(Baser):
         logging.info("[INFO]crawl all...")
 
         self.create_file() 
+        self.crawl_zj()          # 珠江流域主要水库最新水情信息
         self.crawl_qghl()        # 全国河流水情
         #self.crawl_zjsq()
         self.crawl_nbslL()       # 宁波智慧水利平台水库
@@ -765,7 +771,6 @@ class NowCrawler(Baser):
         self.crawl_cjhb()        # 湖北省常用水情报表
         self.crawl_hbzy()        # 湖北省内主要流域河道站实时水情
         self.crawl_hhsw()        # 黄河水文站
-        self.crawl_zj()          # 珠江流域主要水库最新水情信息
         self.zip_file()
         logging.info("[INFO]finish crawl all...")
 
