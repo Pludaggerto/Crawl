@@ -4,7 +4,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>4618b47a-9398-4e03-b5f1-3714791d0394</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>Code\crawl_now.py</StartupFile>
+    <StartupFile>Code\history\crawl_schd.py</StartupFile>
     <SearchPath>Code\Baser</SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
     <OutputPath>.</OutputPath>

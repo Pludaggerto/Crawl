@@ -19,7 +19,7 @@ class Filterer(object):
         self.resultFolder    = os.path.join(workspace, "File\\result")
         self.auxiliaryFolder = os.path.join(workspace, "File\\Auxiliary")
         
-        self.stationFile = os.path.join(workspace, "Auxiliary\\全国河流水文站坐标.xlsx")
+        self.stationFile = os.path.join(workspace, "File\\Auxiliary\\全国河流水文站坐标.xlsx")
 
         self.recordFiles     = []
         self.stationLocation = []

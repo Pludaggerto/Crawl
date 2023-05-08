@@ -17,6 +17,7 @@ from tqdm import trange
 import json
 import pandas as pd
 import random
+import undetected_chromedriver         as uc
 class Baser(object):
 
     def __init__(self):
@@ -89,21 +90,20 @@ class CrawlerSCHD(Baser):
         return None
 
     def crawl(self):
-        #  browser.find_element(By.XPATH, '//*[@id="app"]/div/div[2]/div[2]/div[2]/div/div/div/button[2]/span').click()  
-        chrome_options = Options()
-        # chrome_options.add_argument('--headless')
-        chrome_options.add_argument('--disable-gpu')
+        
+        options = uc.ChromeOptions()
+        browser = uc.Chrome(options=options)
+        time.sleep(random.random() * 3)
 
-        browser = webdriver.Chrome(options = chrome_options)
         browser.get(self.url_schd)
-        time.sleep(5)    
+        time.sleep(10)    
         browser.find_element(By.XPATH, '//*[@id="app"]/div/div[2]/div[2]/div[2]/div/div/div/ul/li[1]').click()
             
         fileName = self.file
         f = open(fileName, 'a+', newline="", encoding='utf-8')
         writer = csv.writer(f)
         times = 0
-        while(times < 16000):
+        while(times < 18000):
             html = browser.page_source
             soup = BeautifulSoup(html,'html.parser')
             time.sleep(5 + random.random() * 2)   
