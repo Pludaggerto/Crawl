@@ -66,13 +66,14 @@ class NowCrawler(Baser):
         logging.info("[INFO]crawling now...")
         super().__init__()
 
+        # website
         self.url_hhsw  = 'http://61.163.88.227:8006/hwsq.aspx?sr=0nkRxv6s9CTRMlwRgmfFF6jTpJPtAv87'
         self.url_zj    = "http://www.pearlwater.gov.cn/sssq/"
         self.url_cjhb  = "http://113.57.190.228:8001/Web/Report/"
         self.url_cjll  = "http://www.cjh.com.cn/sssqcwww.html"
-        self.url_qghl  = "http://xxfb.mwr.cn/hydroSearch/greatRiver" 
+        self.url_qghl  = "http://xxfb.mwr.cn/hydroSearch/greatRiver"   
         self.url_hbzy  = "http://113.57.190.228:8001/web/Report/"
-        self.url_gdxq  = "http://210.76.80.76:9001/Report/WaterReport.aspx"
+        self.url_gdxq  = "http://210.76.80.76:9001/floodsituation/water.json"
         self.url_jxzd  = "http://weixin.jxsswj.cn/jxsw/rthy/realtimeRiverInfo.html"
         self.url_qgdx  = "http://xxfb.mwr.cn/hydroSearch/greatRsvr"
         self.url_hngz  = "http://yzt.hnswkcj.com:9090/#/"
@@ -81,6 +82,7 @@ class NowCrawler(Baser):
         self.url_nbslL = "http://sw.nbzhsl.cn/#/?url=reservoirWater"
         self.url_ahsx  = "http://yc.wswj.net/ahsxx/LOL/?refer=upl&to=public_public"
         self.url_zjsq  = "https://sqfb.slt.zj.gov.cn/weIndex.html#/main/map/realtime-water"
+        self.url_gdsl  = "http://210.76.80.76:9001/floodsituation/water.json"
 
         self.nowDate  = datetime.datetime.now().strftime('%Y-%m-%d')
         self.headers  = {
@@ -149,6 +151,8 @@ class NowCrawler(Baser):
         fileName_nbslR  = self.get_file_name("nbslR") # river
         fileName_nbslL  = self.get_file_name("nbslL") # reservoir
         fileName_ahsx   = self.get_file_name("ahsx")
+        fileName_gdxqnew = self.get_file_name("gdxqnew")
+        fileName_gdsl    = self.get_file_name("gdsl")
 
         self.create_single_file(fileName_hhsw  , ["日期", "河名", "站名", "水位", "流量", "含沙量"])
         self.create_single_file(fileName_zjre , ["日期", "站名", "时间", "水位", "出库", "入库", "库容"])
@@ -160,6 +164,7 @@ class NowCrawler(Baser):
         self.create_single_file(fileName_hbzy  , ["日期", "市（洲）", "站点编号", "站名", "站类", "水位", "流量", "昨日涨落"])
         self.create_single_file(fileName_gdxqR , ["日期", "市", "市(县)", "站名", "时间", "水位", "警戒水位", "水势"])
         self.create_single_file(fileName_gdxqL , ["日期", "市", "市(县)", "站名", "时间", "水位", "汛限水位"])
+        self.create_single_file(fileName_gdxqnew, ['站点编号', 'Addvcd', "站名", '站点类型','时间', '水位', "流量"])
         self.create_single_file(fileName_jxzd  , ["日期", "站名", "时间", "水位(m)", "流量(m³/s)", "超警戒(m)", "站点编号"])
         self.create_single_file(fileName_qgdx  , ["damel", "时间", "省", "流域", "河名", "库水位(米)", "站点编号", "站名","蓄水量(百万3)", "入库(米3/秒)"])
         self.create_single_file(fileName_hngzR , ["时间", "水位", "流量", "WPTN", "警戒水位", "OBHTZ", "OBHTZTM", "比警戒", "HIS", "ADDVCD",
@@ -175,6 +180,7 @@ class NowCrawler(Baser):
         self.create_single_file(fileName_nbslR, ["日期", "站名", "水位", "保证", "涨落"])
         self.create_single_file(fileName_nbslL, ["日期", "站名", "水位八点", "库容八点","水位实时", "库容实时", "水位控制", "库容控制", "控制百分比"])
         # self.create_single_file(fileName_ahsx, ["日期", "河名", "站名", "时间", "水位", "所属项目", "站点编号"])
+        self.create_single_file(fileName_gdsl, ["编号", "站名", "地址", "Addvcd", "经度", "纬度", "日期", "水位(米)" "流量(米3/秒)", "警戒水位(米)"])
 
     def crawl_hhsw(self):
         try:
@@ -222,24 +228,25 @@ class NowCrawler(Baser):
             logging.error(self.nowDate + " [ERROR]crawling hh error...")
             
     
-    def crawl_zj(self):         
+    def crawl_zj(self):    
+           
         try:
             logging.info("[INFO]crawling zj...")
 
             options = uc.ChromeOptions()
             options.headless=True
             options.add_argument('--headless')
-            browser = uc.Chrome(options=options)
+            browser = uc.Chrome(options = options)
             time.sleep(random() * 3)
             browser.get(self.url_zj)
-            time.sleep(random() * 10)
+            time.sleep(random() * 5)
             html = browser.page_source
             soup = BeautifulSoup(html, 'html.parser')
             browser.save_screenshot(r'C:\Users\lwx\Desktop\test\datadome_undetected_webddriver' + self.nowDate + ".png")
             tables = soup.select(".table-wrapper")
             if tables == []:
                 browser.get(self.url_zj)
-                time.sleep(random() * 20)
+                time.sleep(random() * 10)
                 tables = soup.select(".table-wrapper")
             table_reservoir = tables[0]
             table_river = tables[1]
@@ -270,6 +277,7 @@ class NowCrawler(Baser):
             logging.info("[INFO]finish crawling zj...")
         except:
             logging.error(self.nowDate + " [ERROR] error zj...")
+
 
 
     def crawl_cjhb(self):
@@ -420,58 +428,30 @@ class NowCrawler(Baser):
     def crawl_gdxq(self):
         try: 
             logging.info("[INFO]crawling gdxq...")
-            dateEnd = (datetime.datetime.now() + datetime.timedelta(days=-1.01)).strftime('%Y-%m-%d %H:00')
-            datestart = (datetime.datetime.now() + datetime.timedelta(days=-1.1)).strftime('%Y-%m-%d %H:00')
-
             sleep(1)
-            chrome_options = Options()
-            chrome_options.add_argument('--headless')
-            chrome_options.add_argument('--disable-gpu')
-            browser = webdriver.Chrome(options=chrome_options)
-            browser.get(self.url_gdxq)           
-            #browser.find_element(By.ID,'txt_time1').send_keys(datestart)
-            #browser.find_element(By.ID,'txt_time2').send_keys(dateEnd)
-            #browser.find_element(By.ID,'txt_search').click()
-            #browser.find_element(By.ID,'btn_query').click()
 
-            html = browser.page_source
-            soup = BeautifulSoup(html,'html.parser')
+            response = requests.get(url = self.url_gdxq, headers = self.headers)
+            response.encoding = "utf-8"
+            jsons = json.loads(response.text)
+            dataList = list(jsons["data"])
+            resultRows = []
+            resultRow = []
+            resultRowNames1 = ['STCD', 'Addvcd', "STNM", 'STTP']
+            resultRowNames2 = ['TM', 'Z', "Q"]
+            for data in dataList:
+                for name1 in resultRowNames1:
+                    resultRow.append(data[name1])
+                for name2 in resultRowNames2:
+                    resultRow.append(data["Data"][0][name2])
+                resultRows.append(resultRow)
+                resultRow = []
 
-            fileName = os.path.join(self.workspace, self.nowDate.split("-")[0] + "_gdxqR.txt")
-            f = open(fileName, 'a+', newline="", encoding='utf-8')
-            writer = csv.writer(f)
-            first = False
-            for tr in soup.select("#LeftTree")[0].table.tbody:
-                if isinstance(tr,bs4.element.Tag):
-                    if first:
-                        tds = tr('td')
-                        row = [self.nowDate]
-                        for td in tds:
-                            string = td.string.replace("\n", "").replace("\t", "").replace(" ", "")
-                            row.append(string)
-                        writer.writerow(row)
-                    first = True
-            f.close()
-
-            fileName = os.path.join(self.workspace, self.nowDate.split("-")[0] + "_gdxqL.txt")
-            f = open(fileName, 'a+', newline="", encoding='utf-8')
-            writer = csv.writer(f)
-            first = 0 
-            for tr in soup.select("#RightTree")[0].table.tbody:
-                if isinstance(tr,bs4.element.Tag):
-
-                    if first >= 2:
-                        tds = tr('td')
-                        row = [self.nowDate]
-                        for td in tds:
-                            string = td.string.replace("\n", "").replace("\t", "").replace(" ", "")
-                            row.append(string)
-                        writer.writerow(row)
-                    first = first + 1
-            f.close()
-            logging.info("[INFO]crawling gdxq end...")
+            df = pd.DataFrame(resultRows)
+            fileName = os.path.join(self.workspace, self.nowDate.split("-")[0] + "_gdxqnew.txt")
+            df.to_csv(fileName, index = False,
+                        header = False, mode = "a+")
         except:
-            logging.error(self.nowDate + " [ERROR]crawling gdxq error...")
+            logging.error("[INFO]Error crawling gdxq...")
         return None
 
     def crawl_jxzd(self):
@@ -745,6 +725,49 @@ class NowCrawler(Baser):
 
             logging.error(self.nowDate + " [ERROR]crawling zjsq error")
 
+    def crawl_gdsl(self):
+        try:
+            logging.info("[INFO]crawling gdsl...")
+            time.sleep(0.5)    
+            response = requests.get(url = self.url_gdsl, headers = self.headers)
+            response.encoding = "utf-8"
+            jsons = json.loads(response.text)
+            time.sleep(0.5)    
+
+            if not jsons["success"]:
+                logging.info("[INFO]error in qghl crawling...")
+                return 
+
+            else:
+                # ["编号", "站名", "地址", "Addvcd", "经度", "纬度", "日期", "水位(米)" "流量(米3/秒)", "警戒水位(米)"]
+                # data
+                dataList = list(jsons["data"])
+                resultRows = []
+                resultRow = []
+                resultRowNames1 = ["STCD", 'STNM', 'Address', "Addvcd", 'Lat', "Lng"]
+                resultRowNames2 = ["Z", "Q", "WRZ"]
+                for data in dataList:
+
+                    for name in resultRowNames1:
+                        resultRow.append(data[name])
+
+                    resultRow.append(data["Data"][0]["TM"].split(" ")[0])
+
+                    for name in resultRowNames2:
+                        resultRow.append(data["Data"][0][name])
+
+
+                    resultRows.append(resultRow)
+                    resultRow = []
+
+                df = pd.DataFrame(resultRows)
+                fileName = os.path.join(self.workspace, self.nowDate.split("-")[0] + "_gdsl.txt")
+                df.to_csv(fileName, index = False,
+                            header = False, mode = "a+")
+                logging.info("[INFO]finish crawling qghl...")
+        except:
+            logging.error(self.nowDate + " [ERROR]crawling qghl error...")
+
     def zip_file(self):
 
         zip_file = zipfile.ZipFile(os.path.join(self.workspace, self.nowDate + ".zip"),'w')
@@ -757,23 +780,24 @@ class NowCrawler(Baser):
         logging.info("[INFO]crawl all...")
 
         self.create_file() 
+        self.crawl_gdsl()        # 广东水利信息
         self.crawl_zj()          # 珠江流域主要水库最新水情信息
+        self.crawl_jxzd()        # 江西重点江河站水情
+        self.crawl_gdxq()        # 广东省水利厅讯情发布系统
         self.crawl_qghl()        # 全国河流水情
         #self.crawl_zjsq()
         self.crawl_nbslL()       # 宁波智慧水利平台水库
         self.crawl_nbslR()       # 宁波智慧水利平台河流
         self.crawl_thly()        # 太湖流域片水文信息服务
-        self.crawl_gdxq()        # 广东省水利厅讯情发布系统
         self.crawl_hngz()        # 湖南公众服务一张图
         self.crawl_qgdx()        # 全国大型水库实时水情
-        self.crawl_jxzd()        # 江西重点江河站水情
         self.crawl_cjll()        # 长江流域重要站实时水情表
         self.crawl_cjhb()        # 湖北省常用水情报表
         self.crawl_hbzy()        # 湖北省内主要流域河道站实时水情
         self.crawl_hhsw()        # 黄河水文站
         self.zip_file()
         logging.info("[INFO]finish crawl all...")
-
+        
 def main():
 
     log = logging.getLogger()
@@ -781,8 +805,8 @@ def main():
     log.addHandler(handler)
     log.setLevel(logging.ERROR) 
 
-    workspace  = os.path.dirname(os.path.abspath(os.path.dirname(__file__)))
-    dataFolder = os.path.join(workspace, "File\\data\\now")
+    workspace  = os.path.dirname(os.path.abspath(os.path.dirname(__file__))) 
+    dataFolder = r"d:\Station"
 
     fh = logging.FileHandler(os.path.join(dataFolder, "Crawl.log"))
     fh.setLevel(logging.ERROR)

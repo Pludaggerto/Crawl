@@ -10,7 +10,7 @@ import json
 
 class Filterer(object):
 
-    def __init__(self, workspace):
+    def __init__(self, workspace):      
         logging.info("[INFO]Filtering begin...")
 
         self.workspace = workspace
@@ -40,9 +40,12 @@ class Filterer(object):
         # ["站名", "站点编号", "河名", "经度", "纬度"]
         stationJsons = glob.glob(os.path.join(self.auxiliaryFolder, "*.json"))
         stationJsonPart = []
+
         for stationJson in stationJsons:
+
             if "station.json" in stationJson:
                 break
+
             # from json File
             with open(stationJson, 'r', encoding = "UTF-8") as jsonFile:
                 jsonText = jsonFile.read()
@@ -60,21 +63,30 @@ class Filterer(object):
                     dataList = jsonOri["data"]
                     stationColName = ["stnm", "stcd", "rvnm", "lgtd", "lttd"]
 
-                for data in dataList:
+                elif "gdsl.json" in stationJson:
+                    dataList = jsonOri["data"]
+                    stationColName = ["STNM", "STCD", "rvnm", "Lng", "Lat"]
+
+
+                for data in dataList:   
                     stnm = data[stationColName[0]]
                     stcd = data[stationColName[1]]
-                    rvnm = data[stationColName[2]]
+                    if not "gdsl.json" in stationJson:
+                        rvnm = data[stationColName[2]]
+                    else:
+                        rvnm = ""
                     lgtd = data[stationColName[3]]
                     lttd = data[stationColName[4]]
                     stationJsonPart.append([stnm, stcd, rvnm, lgtd, lttd])
         self.stationLocation = pd.DataFrame(stationJsonPart)
         self.stationLocation.columns = ["站名", "站点编号", "河名", "经度", "纬度"]
 
+        # from excel File 
         stationxlsx = pd.read_excel(self.stationFile)
         stationxlsx = stationxlsx[["站名","东经","北纬","站号","河名"]]
         stationxlsx.columns = ["站名","经度","纬度","站点编号","河名"]
+        stationxlsx["站点编号"] = stationxlsx['站点编号'].astype(str)
 
-        # from crawl file
         for fileName in self.recordFiles:
             stationDf = pd.read_csv(fileName)
             if "LGTD" in stationDf.columns:
@@ -104,26 +116,31 @@ class Filterer(object):
             else:
 
                 if "站点编号" in stationDf.columns:
-                    stcd = stationDf["站点编号"]
-                    df = pd.DataFrame(stcd)
-                    df.columns = ["站点编号"]
-                    df.drop_duplicates(["站点编号"], inplace = True)
-                    df = pd.merge(df, stationxlsx, on = "站点编号", how = "inner")
+                    stcd = stationDf["站点编号"].astype(str)
+                    stcdDf = pd.DataFrame(stcd)
+                    stcdDf.columns = ["站点编号"]
+                    stcdDf.drop_duplicates(["站点编号"], inplace = True)
+
+                    stcdDf["站点编号"] = stcdDf["站点编号"].astype(str)
+
+                    stcdDf = pd.merge(stcdDf, stationxlsx, on = "站点编号", how = "inner")
 
                 else:
                     stnm  = stationDf["站名"]
-                    df = pd.DataFrame(stnm)
-                    df.columns = ["站名"]
-                    df.drop_duplicates(["站名"], inplace = True)
-                    df = pd.merge(df, stationxlsx, on = "站名", how = "inner")
-                df = df[["站名", "站点编号", "河名", "经度", "纬度"]]
-                self.stationLocation = pd.concat([df, self.stationLocation], axis=0, ignore_index=True)
+                    stnmdf = pd.DataFrame(stnm)
+                    stnmdf.columns = ["站名"]
+                    stnmdf.drop_duplicates(["站名"], inplace = True)
+                    stnmdf = pd.merge(stnmdf, stationxlsx, on = "站名", how = "inner")
+
+                stnmdf = stnmdf[["站名", "站点编号", "河名", "经度", "纬度"]]
+                self.stationLocation = pd.concat([stnmdf, self.stationLocation], axis=0, ignore_index=True)
         self.stationLocation.columns = ["stnm", "stcd", "rvnm", "lon", "lat"]
         self.stationLocation.drop_duplicates(["stnm"], inplace = True)
        
+        # judge lake or river
         riverFiles = ["zjri", "gdxqR", "hngzR", "nbslR", "cjll", "qghl", "jxzd"]
-        lakeFiles = ["zjre", "nbslL", "hngzL", "gdxqL", "qgdx"]
-        mixFiles = ["hhsw", "cjhb", "hbzy"]
+        lakeFiles  = ["zjre", "nbslL", "hngzL", "gdxqL", "qgdx"]
+        mixFiles   = ["hhsw", "cjhb", "hbzy"]
 
         river_name = []
         lake_name = []
@@ -168,18 +185,19 @@ class Filterer(object):
         beforeDf.columns = ["stnm", "stcd", "rvnm", "lat", "lon"] 
         self.stationLocation = pd.concat([beforeDf, self.stationLocation], axis=0, ignore_index=True)
 
-        lakeDf = pd.DataFrame([lake_name , [0] * len(lake_name)]).transpose()
+        lakeDf = pd.DataFrame([lake_name , [1] * len(lake_name)]).transpose()
         lakeDf.columns = ["stnm", "type"]
         lakeDf.drop_duplicates(["stnm"], inplace = True)
-        riverDf = pd.DataFrame([river_name, [1] * len(river_name)]).transpose()
+        riverDf = pd.DataFrame([river_name, [0] * len(river_name)]).transpose()
         riverDf.columns = ["stnm", "type"]
         riverDf.drop_duplicates(["stnm"], inplace = True)
         typeDf = pd.concat([lakeDf, riverDf])
+
         gdf = gpd.GeoDataFrame(self.stationLocation, 
                                geometry=gpd.points_from_xy(self.stationLocation["lon"], 
                                                            self.stationLocation["lat"]))
-        result = pd.merge(gdf, typeDf, how = "left")
 
+        result = pd.merge(gdf, typeDf, how = "left", left_on='stnm', right_on='stnm')
 
         result.to_file(os.path.join(self.auxiliaryFolder, "station.json"), driver="GeoJSON")
         result.to_file(os.path.join(self.auxiliaryFolder, "station.shp"))                                                                                       
@@ -199,25 +217,33 @@ class Filterer(object):
                     tempDf = stationDf[stationDf["站名"] == name]
                     outFile = os.path.join(self.resultFolder, name.replace("*","") + ".txt")
                     if name == "七里街":
-
                         e = 2
                     if not name in list(repeatedName.keys()):
                         repeatedName[name] = 1
-                        if os.path.exists(outFile):
-                            tempDf.to_csv(outFile, mode = "a+", header = False, index = False)
-                        else:
-                            tempDf.to_csv(outFile, mode = "w+", index = False)
-                    else:               
+                        try:
+                            if os.path.exists(outFile):
+                                tempDf.to_csv(outFile, mode = "a+", header = False, index = False)
+                            else:
+                                tempDf.to_csv(outFile, mode = "w+", index = False)
+                        except :
+                            logging.info("Error in " + outFile)
+                    else:     
+                        
                         repeatedName[name] = repeatedName[name] + 1
-                        tempDf.to_csv(outFile[:-4] + "_" + str(repeatedName[name]) + ".txt", mode = "w+", index = False)
-
-        
+                        try:
+                            tempDf.to_csv(outFile[:-4] + "_" + str(repeatedName[name]) + ".txt", mode = "w+", index = False)
+                        except:
+                            logging.info("Error in " + outFile)
+    
         for File in glob.glob(os.path.join(self.resultFolder, "*.txt")):
-            stationDf = pd.read_csv(File)
-            if drop_duplicated:
-                stationDf.drop_duplicates(inplace = True)
-            stationDf.to_csv(File, mode = "w+", index = False)
-            stationCount[File.split("\\")[-1][:-4]] = len(stationDf)
+            try:
+                stationDf = pd.read_csv(File)
+                if drop_duplicated:
+                    stationDf.drop_duplicates(inplace = True)
+                stationDf.to_csv(File, mode = "w+", index = False)
+                stationCount[File.split("\\")[-1][:-4]] = len(stationDf)
+            except:
+                logging.error('[error]' + File)
 
         df = pd.DataFrame([stationCount.keys(), [float(i) for i in stationCount.values()]]).transpose()
         df.columns = ["stnm", "count"] 

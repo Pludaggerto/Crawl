@@ -32,6 +32,8 @@ http://yc.wswj.net/ahsxx/LOL/?refer=upl&to=public_public
 # 宁波智慧水利平台(nbsl)
 http://sw.nbzhsl.cn/#/?url=waterRealTime // R
 http://sw.nbzhsl.cn/#/?url=reservoirWater // L
+# 广东水利信息(gdsl)
+http://210.76.80.76:9001/#/water
 # 淅江省水雨情监测预警展示平台
 https://sqfb.slt.zj.gov.cn/weIndex.html#/main/map/realtime-water
 # 厦门利信息网~讯情发布系统

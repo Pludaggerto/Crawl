@@ -4,14 +4,14 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>4618b47a-9398-4e03-b5f1-3714791d0394</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>Code\history\crawl_schd.py</StartupFile>
+    <StartupFile>Code\Filterer.py</StartupFile>
     <SearchPath>Code\Baser</SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
     <OutputPath>.</OutputPath>
     <Name>Crawl</Name>
     <RootNamespace>Crawl</RootNamespace>
     <TestFramework>Pytest</TestFramework>
-    <InterpreterId>CondaEnv|CondaEnv|geos</InterpreterId>
+    <InterpreterId>Global|VisualStudio|geos</InterpreterId>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <DebugSymbols>true</DebugSymbols>
@@ -42,7 +42,6 @@
     <Folder Include="Code\Baser\" />
     <Folder Include="File\data\" />
     <Folder Include="File\data\hh_past\" />
-    <Folder Include="File\data\now\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="File\Auxiliary\hh\hh_Station.cpg" />
@@ -67,25 +66,6 @@
     <Content Include="File\Auxiliary\zjsq.json" />
     <Content Include="File\Auxiliary\全国河流水文站坐标.xls" />
     <Content Include="File\data\hh_past\merge.txt" />
-    <Content Include="File\data\now\2023-04-30.zip" />
-    <Content Include="File\data\now\2023_ahsx.txt" />
-    <Content Include="File\data\now\2023_cjhb.txt" />
-    <Content Include="File\data\now\2023_cjll.txt" />
-    <Content Include="File\data\now\2023_gdxqL.txt" />
-    <Content Include="File\data\now\2023_gdxqR.txt" />
-    <Content Include="File\data\now\2023_hbzy.txt" />
-    <Content Include="File\data\now\2023_hhsw.txt" />
-    <Content Include="File\data\now\2023_hngzL.txt" />
-    <Content Include="File\data\now\2023_hngzR.txt" />
-    <Content Include="File\data\now\2023_jxzd.txt" />
-    <Content Include="File\data\now\2023_nbslL.txt" />
-    <Content Include="File\data\now\2023_nbslR.txt" />
-    <Content Include="File\data\now\2023_qgdx.txt" />
-    <Content Include="File\data\now\2023_qghl.txt" />
-    <Content Include="File\data\now\2023_thly.txt" />
-    <Content Include="File\data\now\2023_zjre.txt" />
-    <Content Include="File\data\now\2023_zjri.txt" />
-    <Content Include="File\data\now\Crawl.log" />
     <Content Include="note.md" />
     <Content Include="station.md" />
   </ItemGroup>
