@@ -769,7 +769,7 @@ class NowCrawler(Baser):
             logging.error(self.nowDate + " [ERROR]crawling qghl error...")
 
     def zip_file(self):
-
+        # TODO: judge weekend to judge save time
         zip_file = zipfile.ZipFile(os.path.join(self.workspace, self.nowDate + ".zip"),'w')
         for fileName in glob.glob(os.path.join(self.workspace, "*.txt")):
             zip_file.write(fileName, fileName.split("\\")[-1])
@@ -807,8 +807,15 @@ def main():
 
     workspace  = os.path.dirname(os.path.abspath(os.path.dirname(__file__))) 
     dataFolder = r"d:\Station"
+    logFile = os.path.join(dataFolder, "Crawl.log")
 
-    fh = logging.FileHandler(os.path.join(dataFolder, "Crawl.log"))
+    if not os.path.exists(logFile):
+        if not os.path.exists(dataFolder):
+            os.mkdir(dataFolder)
+        f = open(logFile, 'w')
+        f.close()
+
+    fh = logging.FileHandler(logFile)
     fh.setLevel(logging.ERROR)
     log.addHandler(fh)
 
