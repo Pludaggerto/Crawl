@@ -29,7 +29,7 @@ class Baser(object):
                     }
 
     def __del__(self):
-        pass
+        return 
 
     def create_assist_date(self, datestart='2016-01-01', dateend=None):
 
