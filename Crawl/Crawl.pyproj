@@ -67,6 +67,7 @@
     <Content Include="File\Auxiliary\全国河流水文站坐标.xls" />
     <Content Include="File\data\hh_past\merge.txt" />
     <Content Include="note.md" />
+    <Content Include="README.md" />
     <Content Include="station.md" />
   </ItemGroup>
   <ItemGroup>

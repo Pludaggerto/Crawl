@@ -276,7 +276,7 @@ class NowCrawler(Baser):
             f.close()
             logging.info("[INFO]finish crawling zj...")
         except:
-            logging.error(self.nowDate + " [ERROR] error zj...")
+            logging.error(self.nowDate + " [ERROR]crawling jxzd error...")
 
 
 
@@ -769,12 +769,16 @@ class NowCrawler(Baser):
             logging.error(self.nowDate + " [ERROR]crawling qghl error...")
 
     def zip_file(self):
-        # TODO: judge weekend to judge save time
-        zip_file = zipfile.ZipFile(os.path.join(self.workspace, self.nowDate + ".zip"),'w')
-        for fileName in glob.glob(os.path.join(self.workspace, "*.txt")):
-            zip_file.write(fileName, fileName.split("\\")[-1])
 
-        zip_file.close()
+        zip_file = zipfile.ZipFile(os.path.join(self.workspace, self.nowDate + ".zip"),'w')
+        beforeDate = (datetime.datetime.strptime(self.nowDate, "%Y-%m-%d") - datetime.timedelta(days = 14)).strftime("%Y-%m-%d")
+
+        if os.path.exists(os.path.join(self.workspace, beforeDate+ ".zip")):
+            for fileName in glob.glob(os.path.join(self.workspace, "*.txt")):
+                zip_file.write(fileName, fileName.split("\\")[-1])
+
+            zip_file.close()
+        r
        
     def run_all(self):
         logging.info("[INFO]crawl all...")
