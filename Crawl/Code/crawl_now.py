@@ -694,8 +694,10 @@ class NowCrawler(Baser):
                             row.append(td.string)
                         writer.writerow(row)     
             f.close()      
+
         except:
             logging.error(self.nowDate + " [ERROR]crawling nbslL error...")
+
         return 
 
     def crawl_zjsq(self):
@@ -770,15 +772,16 @@ class NowCrawler(Baser):
 
     def zip_file(self):
 
-        zip_file = zipfile.ZipFile(os.path.join(self.workspace, self.nowDate + ".zip"),'w')
         beforeDate = (datetime.datetime.strptime(self.nowDate, "%Y-%m-%d") - datetime.timedelta(days = 14)).strftime("%Y-%m-%d")
 
         if os.path.exists(os.path.join(self.workspace, beforeDate+ ".zip")):
+
+            zip_file = zipfile.ZipFile(os.path.join(self.workspace, self.nowDate + ".zip"),'w')
+
             for fileName in glob.glob(os.path.join(self.workspace, "*.txt")):
                 zip_file.write(fileName, fileName.split("\\")[-1])
 
             zip_file.close()
-        r
        
     def run_all(self):
         logging.info("[INFO]crawl all...")

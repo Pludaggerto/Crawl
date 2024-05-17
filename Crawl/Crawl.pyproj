@@ -4,7 +4,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>4618b47a-9398-4e03-b5f1-3714791d0394</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>Code\crawl_now.py</StartupFile>
+    <StartupFile>Code\Ploter.py</StartupFile>
     <SearchPath>Code\Baser</SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
     <OutputPath>.</OutputPath>
@@ -23,7 +23,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Code\Baser\Baser.py" />
-    <Compile Include="Code\count.py" />
+    <Compile Include="Code\Count.py" />
     <Compile Include="Code\crawl_now.py" />
     <Compile Include="Code\Filterer.py" />
     <Compile Include="Code\history\Crawl_past.py" />
@@ -32,6 +32,7 @@
     <Compile Include="Code\history\Post_hh.py" />
     <Compile Include="Code\history\Writebat.py" />
     <Compile Include="Code\history\Crawl_hh.py" />
+    <Compile Include="Code\Ploter.py" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Code\history\" />
@@ -69,6 +70,7 @@
     <Content Include="note.md" />
     <Content Include="README.md" />
     <Content Include="station.md" />
+    <Content Include="STSong.ttf" />
   </ItemGroup>
   <ItemGroup>
     <InterpreterReference Include="CondaEnv|CondaEnv|geos" />
